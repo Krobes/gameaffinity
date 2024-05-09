@@ -33,7 +33,10 @@ jobs:
       - name: Create .env file with variables
         run: |
           cd app
-          echo "APP_ENV=${{ secrets.APP_ENV }}" > .env && echo "APP_SECRET=${{ secrets.APP_SECRET }}" >> .env && echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+          touch .env
+          echo "APP_ENV=${{ secrets.APP_ENV }}" > .env  # Define la variable 'APP_ENV' en el archivo .env
+          echo "APP_SECRET=${{ secrets.APP_SECRET }}" >> .env  # Define la variable 'APP_SECRET' en el archivo .env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env  # Define la variable 'DATABASE_URL' en el archivo .env
       - name: Cache Composer packages
         id: composer-cache
         uses: actions/cache@v3

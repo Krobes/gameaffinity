@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class ClassGuardsLogin
 {
@@ -14,9 +15,9 @@ class ClassGuardsLogin
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function guardAgainstExistingNickorEmail($nick, $email)
+    public function guardAgainstExistingNickOrEmail($nick, $email): bool
     {
         $nickExist = $this->entityManager->getRepository(User::class)->findBy([
             'nick' => $nick
@@ -38,14 +39,14 @@ class ClassGuardsLogin
         return true;
     }
 
-    public function guardAgainstWeakPassword($password)
+    public function guardAgainstWeakPassword($password): bool
     {
         $uppercase = preg_match('@[A-Z]@', $password);
         $lowercase = preg_match('@[a-z]@', $password);
         $number = preg_match('@[0-9]@', $password);
         $specialChars = preg_match('@\W@', $password);
 
-        if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 10) {
+        if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
             $this->errors[] = 'La contraseña no es lo suficientemente segura';
             return false;
         }
@@ -53,7 +54,7 @@ class ClassGuardsLogin
         return true;
     }
 
-    public function guardAgainstDifferentPasswords($firstPassword, $secondPassword)
+    public function guardAgainstDifferentPasswords($firstPassword, $secondPassword): bool
     {
         if ($firstPassword != $secondPassword) {
             $this->errors[] = 'Las contraseñas no coinciden';

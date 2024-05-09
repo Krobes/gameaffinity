@@ -22,11 +22,14 @@ class RegisterController extends AbstractController
     ) {
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/register', name: 'app_register')]
     public function index(Request $request): Response
     {
         $params = $request->request->all();
-        $this->guardsLogin->guardAgainstExistingNickorEmail($params['nick'], $params['email']);
+        $this->guardsLogin->guardAgainstExistingNickOrEmail($params['nick'], $params['email']);
         $this->guardsLogin->guardAgainstWeakPassword($params['firstPassword']);
         $this->guardsLogin->guardAgainstDifferentPasswords($params['firstPassword'], $params['secondPassword']);
         $lastUsername = $this->authenticationUtils->getLastUsername();

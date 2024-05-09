@@ -32,6 +32,7 @@ jobs:
         run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
       - name: Create .env file with variables
         run: |
+          cd app
           touch .env
           echo APP_ENV=${{ secrets.APP_ENV }} > .env  # Define la variable 'APP_ENV' en el archivo .env
           echo APP_SECRET=${{ secrets.APP_SECRET }} >> .env  # Define la variable 'APP_SECRET' en el archivo .env

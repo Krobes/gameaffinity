@@ -1,0 +1,10 @@
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
+/vendor/
+
+###> phpunit/phpunit ###
+phpunit.xml.dist
+.phpunit.result.cache
+###< phpunit/phpunit ###

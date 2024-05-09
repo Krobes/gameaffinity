@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="/scss/index.css">
+{% endblock %}
+{% block body %}
+    <main>
+        <section class="section slider-section first">
+            <section class="parallax">
+                <div class="container slider-column parallax-inner">
+                    <div class="swiper swiper-slider">
+                        <h1 class="section-title">
+                            <span class="title-text">Novedades</span>
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="svg-icon"
+                                 viewBox="0 0 24 24" fill="currentColor" role="presentation">
+                                <path d="M5.622.631A2.153 2.153 0 0 0 5 2.147c0 .568.224 1.113.622 1.515l8.249 8.34-8.25 8.34a2.16 2.16 0 0 0-.548 2.07c.196.74.768 1.317 1.499 1.515a2.104 2.104 0 0 0 2.048-.555l9.758-9.866a2.153 2.153 0 0 0 0-3.03L8.62.61C7.812-.207 6.45-.207 5.622.63z"></path>
+
+                            </svg>
+                        </h1>
+                        <div class="swiper-wrapper">
+                            {% for game in lastGames %}
+                                {% set var = game.cover %}
+                                {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                                {% set urlCompleta = urlBase ~ var ~ ".png" %}
+                                <div class="swiper-slide">
+                                    <div class="slide-overlay">
+                                        <div class="slide-content">
+                                            <h2>{{ game.name }}</h2>
+                                            <h5>Release: {{ game.dateRelease }}</h5>
+                                            <p>{{ game.summary }}</p>
+                                            <div class="buttons">
+                                                <button class="btn btn-warning">Ver ficha</button>
+                                                <button class="btn btn-warning">Leer reviews</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{{ urlCompleta }}" alt="Swiper">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+        <section class="section card-section first">
+            <div class="container card-container">
+                <h1 class="section-title">
+                    <span class="title-text">Juegos por plataforma</span>
+                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="svg-icon"
+                         viewBox="0 0 24 24" fill="currentColor" role="presentation">
+                        <path d="M5.622.631A2.153 2.153 0 0 0 5 2.147c0 .568.224 1.113.622 1.515l8.249 8.34-8.25 8.34a2.16 2.16 0 0 0-.548 2.07c.196.74.768 1.317 1.499 1.515a2.104 2.104 0 0 0 2.048-.555l9.758-9.866a2.153 2.153 0 0 0 0-3.03L8.62.61C7.812-.207 6.45-.207 5.622.63z"></path>
+                    </svg>
+                </h1>
+                <div class="row mb-4">
+                    {% for platform in platforms %}
+                        {% set var = platform.logo %}
+                        {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                        {% set urlCompleta = urlBase ~ var ~ ".png" %}
+                        <div class="col-md-6 col-lg-3 mb-5">
+                            <div class="card">
+                                <img src="{{ urlCompleta }}" class="card-img-top" alt="Platform Logo">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ platform.name }}</h5>
+                                    <p class="card-text">{{ platform.getGames()|length }} juegos totales para esta
+                                        plataforma.</p>
+                                    <button class="btn btn-warning">Ver juegos</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="section slider-section first">
+            <section class="parallax">
+                <div class="container slider-column parallax-inner">
+                    <div class="swiper swiper-slider">
+                        <h1 class="section-title">
+                            <span class="title-text">Próximos lanzamientos</span>
+                            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="svg-icon"
+                                 viewBox="0 0 24 24" fill="currentColor" role="presentation">
+                                <path d="M5.622.631A2.153 2.153 0 0 0 5 2.147c0 .568.224 1.113.622 1.515l8.249 8.34-8.25 8.34a2.16 2.16 0 0 0-.548 2.07c.196.74.768 1.317 1.499 1.515a2.104 2.104 0 0 0 2.048-.555l9.758-9.866a2.153 2.153 0 0 0 0-3.03L8.62.61C7.812-.207 6.45-.207 5.622.63z"></path>
+
+                            </svg>
+                        </h1>
+                        <div class="swiper-wrapper">
+                            {% for game in nextGames %}
+                                {% set var = game.cover %}
+                                {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                                {% set urlCompleta = urlBase ~ var ~ ".png" %}
+                                <div class="swiper-slide">
+                                    <div class="slide-overlay">
+                                        <div class="slide-content">
+                                            <h2>{{ game.name }}</h2>
+                                            <h5>Release: {{ game.dateRelease }}</h5>
+                                            <p>{{ game.summary }}</p>
+                                            <div class="buttons">
+                                                <button class="btn btn-warning">Ver ficha</button>
+                                                <button class="btn btn-warning">Leer reviews</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="{{ urlCompleta }}" alt="Swiper">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="/js/slider.js"></script>
+{% endblock %}

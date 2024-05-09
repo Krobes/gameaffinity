@@ -1,0 +1,60 @@
+name: Symfony Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  symfony-tests:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.ROOT_PASSWORD }}
+          MYSQL_DATABASE: symfony_docker
+        ports:
+          - 4306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
+        with:
+          php-version: '8.3'
+      - uses: actions/checkout@v4
+      - name: Change directory to app
+        run: cd app
+      - name: Copy .env.test.local
+        run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+      - name: Create .env file with variables
+        run: echo "APP_ENV=${{ secrets.APP_ENV }}" > .env && echo "APP_SECRET=${{ secrets.APP_SECRET }}" >> .env && echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+      - name: Install Dependencies
+        run: |
+          cd app
+          composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Load database dump
+        run: |
+          mysql -h 127.0.0.1 -P 4306 -u root -p${{ secrets.ROOT_PASSWORD }} --binary-mode=1 symfony_docker < app/tests/data/dump.sql
+      - name: Check MySQL connection
+        run: mysqladmin -h 127.0.0.1 -P 4306 -u root -p${{ secrets.ROOT_PASSWORD }} status
+      - name: Execute tests (Unit and Feature tests) via PHPUnit
+        run: |
+          cd app
+          vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+

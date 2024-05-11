@@ -42,7 +42,7 @@ class Developer
         return $this->id;
     }
 
-    public function setId($id): static
+    public function setId($id): self
     {
         $this->id = $id;
 

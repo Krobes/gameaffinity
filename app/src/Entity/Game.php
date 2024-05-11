@@ -31,7 +31,7 @@ class Game
     private Collection $scores;
 
     #[ORM\ManyToOne(inversedBy: 'games')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Developer $developer = null;
 
     /**
@@ -61,7 +61,7 @@ class Game
         return $this->id;
     }
 
-    public function setId(int $id): static
+    public function setId(int $id): self
     {
         $this->id = $id;
 

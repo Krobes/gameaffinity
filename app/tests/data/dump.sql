@@ -31,12 +31,6 @@ CREATE TABLE `developer`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 54315 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for doctrine_migration_versions
--- ----------------------------
-DROP TABLE IF EXISTS `doctrine_migration_versions`;
-CREATE TABLE `doctrine_migration_versions`  ();
-
--- ----------------------------
 -- Table structure for developer
 -- ----------------------------
 DROP TABLE IF EXISTS `developer`;

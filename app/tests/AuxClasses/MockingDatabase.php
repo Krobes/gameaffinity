@@ -5,19 +5,14 @@ namespace App\Tests\AuxClasses;
 use App\Entity\Developer;
 use App\Entity\Game;
 use App\Entity\Genre;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Platform;
+use App\Entity\Score;
+use App\Entity\User;
 
 class MockingDatabase
 {
-    public function __construct(
-        private EntityManagerInterface $entityManager,
-    ) {
-    }
-
-    public function creatingEntity($entity)
+    public function __construct()
     {
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
     }
 
     public function creatingGame(): ?Game
@@ -28,10 +23,7 @@ class MockingDatabase
         $game->setCover('co5wgu');
         $game->setDeveloper(null);
         $game->setDateRelease('2017-10-13');
-        $game->setSummary('The Evil Within 2 is the latest evolution of survival horror. 
-        Detective Sebastian Castellanos has lost it all. But when given a chance to save his daughter, 
-        he must descend once more into the nightmarish world of STEM. Horrifying threats emerge from every corner as the world twists and warps around him. 
-        Will Sebastian face adversity head on with weapons and traps, or sneak through the shadows to survive.');
+        $game->setSummary('The Evil Within 2 is the latest evolution of survival horror.');
         return $game;
     }
 
@@ -56,4 +48,29 @@ class MockingDatabase
         return $genre;
     }
 
+    public function creatingUser(): ?User
+    {
+        $user = new User();
+        $user->setEmail('mock_mail@gmail.com');
+        $user->setNick('Samus Aran');
+        $user->setRoles(['ROLE_USER']);
+        $user->setPassword('1'); //Puesto que no nos interesa ahora comprobar nada respecto a la pass la dejamos así
+        return $user;
+    }
+
+    public function creatingPlatform(): ?Platform
+    {
+        $platform = new Platform();
+        $platform->setId(34567);
+        $platform->setName('Daw Master System');
+        $platform->setLogo('cg356');
+        return $platform;
+    }
+
+    public function creatingScore(): ?Score
+    {
+        $score = new Score();
+        $score->setScore(7);
+        return $score;
+    }
 }

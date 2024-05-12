@@ -17,7 +17,7 @@ class DeveloperTest extends KernelTestCase
     protected function setUp(): void
     {
         $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
-        $this->mocking = new MockingDatabase($this->entityManager);
+        $this->mocking = new MockingDatabase();
 
         $this->game = $this->mocking->creatingGame();
         $this->entityManager->persist($this->game);

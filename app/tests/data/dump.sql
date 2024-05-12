@@ -11,7 +11,7 @@
  Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 11/05/2024 19:45:29
+ Date: 12/05/2024 22:04:25
 */
 
 SET NAMES utf8mb4;
@@ -28,20 +28,7 @@ CREATE TABLE `developer`  (
   `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 54315 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for developer
--- ----------------------------
-DROP TABLE IF EXISTS `developer`;
-CREATE TABLE `developer`  (
-  `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `foundation_year` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 54315 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for game
@@ -57,7 +44,7 @@ CREATE TABLE `game`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `IDX_232B318C64DD9267`(`developer_id` ASC) USING BTREE,
   CONSTRAINT `FK_232B318C64DD9267` FOREIGN KEY (`developer_id`) REFERENCES `developer` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 294674 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for game_genre
@@ -95,7 +82,7 @@ CREATE TABLE `genre`  (
   `id` int NOT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for platform
@@ -106,7 +93,7 @@ CREATE TABLE `platform`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 633 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for score
@@ -114,37 +101,15 @@ CREATE TABLE `platform`  (
 DROP TABLE IF EXISTS `score`;
 CREATE TABLE `score`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `score` decimal(4, 0) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for score_game
--- ----------------------------
-DROP TABLE IF EXISTS `score_game`;
-CREATE TABLE `score_game`  (
-  `score_id` int NOT NULL,
-  `game_id` int NOT NULL,
-  PRIMARY KEY (`score_id`, `game_id`) USING BTREE,
-  INDEX `IDX_933B0FA12EB0A51`(`score_id` ASC) USING BTREE,
-  INDEX `IDX_933B0FAE48FD905`(`game_id` ASC) USING BTREE,
-  CONSTRAINT `FK_933B0FA12EB0A51` FOREIGN KEY (`score_id`) REFERENCES `score` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `FK_933B0FAE48FD905` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Table structure for score_user
--- ----------------------------
-DROP TABLE IF EXISTS `score_user`;
-CREATE TABLE `score_user`  (
-  `score_id` int NOT NULL,
+  `score` int NOT NULL,
   `user_id` int NOT NULL,
-  PRIMARY KEY (`score_id`, `user_id`) USING BTREE,
-  INDEX `IDX_A78B573F12EB0A51`(`score_id` ASC) USING BTREE,
-  INDEX `IDX_A78B573FA76ED395`(`user_id` ASC) USING BTREE,
-  CONSTRAINT `FK_A78B573F12EB0A51` FOREIGN KEY (`score_id`) REFERENCES `score` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `FK_A78B573FA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  `game_id` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `IDX_32993751A76ED395`(`user_id` ASC) USING BTREE,
+  INDEX `IDX_32993751E48FD905`(`game_id` ASC) USING BTREE,
+  CONSTRAINT `FK_32993751A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `FK_32993751E48FD905` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for user
@@ -158,6 +123,6 @@ CREATE TABLE `user`  (
   `nick` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `UNIQ_IDENTIFIER_EMAIL`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 281 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -2,7 +2,6 @@
 
 namespace App\Tests\Service;
 
-use App\Entity\User;
 use App\Service\ClassGuardsLogin;
 use App\Tests\AuxClasses\MockingDatabase;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ClassGuardsLoginTest extends KernelTestCase
 {
+    private $user;
     private $entityManager;
     private $mocking;
     private $classGuards;
@@ -18,7 +18,11 @@ class ClassGuardsLoginTest extends KernelTestCase
     {
         $this->classGuards = static::getContainer()->get(ClassGuardsLogin::class);;
         $this->entityManager = self::getContainer()->get(EntityManagerInterface::class);
-        $this->mocking = new MockingDatabase($this->entityManager);
+        $this->mocking = new MockingDatabase();
+        $this->user = $this->mocking->creatingUser();
+
+        $this->entityManager->persist($this->user);
+        $this->entityManager->flush();
     }
 
     public function testSamePassword(): void
@@ -35,13 +39,8 @@ class ClassGuardsLoginTest extends KernelTestCase
 
     public function testExistingNickOrEmail(): void
     {
-        $newUser = new User();
-        $newUser->setEmail('mock_mail@gmail.com');
-        $newUser->setNick('Samus Aran');
-        $newUser->setPassword('1'); //Puesto que no nos interesa ahora comprobar nada respecto a la pass la dejamos en blanco
-
-        $this->mocking->creatingEntity($newUser);
-        $existsNickOrEmail = $this->classGuards->guardAgainstExistingNickorEmail('Samus Aran', 'mock_mail@gmail.com');
+        $existsNickOrEmail = $this->classGuards->guardAgainstExistingNickorEmail($this->user->getNick(),
+            $this->user->getEmail());
         $this->assertFalse($existsNickOrEmail);
     }
 
@@ -53,16 +52,11 @@ class ClassGuardsLoginTest extends KernelTestCase
 
     public function testNotExistingNickOrEmail(): void
     {
-        $newUser = new User();
-        $newUser->setEmail('mock_mail@gmail.com');
-        $newUser->setNick('Samus Aran');
-        $newUser->setPassword('1'); //Puesto que no nos interesa ahora comprobar nada respecto a la pass la dejamos en blanco
-        $this->mocking->creatingEntity($newUser);
-        $existsNickAndNotEmail = $this->classGuards->guardAgainstExistingNickorEmail('Samus Aran',
+        $existsNickAndNotEmail = $this->classGuards->guardAgainstExistingNickorEmail($this->user->getNick(),
             'fake-mail@outlook.com');
         $this->assertFalse($existsNickAndNotEmail);
         $existsEmailAndNotNick = $this->classGuards->guardAgainstExistingNickorEmail('Player45',
-            'mock_mail@gmail.com');
+            $this->user->getEmail());
         $this->assertFalse($existsEmailAndNotNick);
     }
 
@@ -88,12 +82,7 @@ class ClassGuardsLoginTest extends KernelTestCase
 
     protected function tearDown(): void
     {
-        $repository = $this->entityManager->getRepository(User::class);
-        $lastUser = $repository->findOneBy(['email' => 'mock_mail@gmail.com', 'nick' => 'Samus Aran']);
-
-        if ($lastUser instanceof User) {
-            $this->entityManager->remove($lastUser);
-            $this->entityManager->flush();
-        }
+        $this->entityManager->remove($this->user);
+        $this->entityManager->flush();
     }
 }

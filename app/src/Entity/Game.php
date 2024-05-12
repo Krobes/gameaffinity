@@ -24,12 +24,6 @@ class Game
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    /**
-     * @var Collection<int, Score>
-     */
-    #[ORM\ManyToMany(targetEntity: Score::class, mappedBy: 'game')]
-    private Collection $scores;
-
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Developer $developer = null;
@@ -49,11 +43,17 @@ class Game
     #[ORM\Column(type: Types::TEXT)]
     private ?string $summary = null;
 
+    /**
+     * @var Collection<int, Score>
+     */
+    #[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'game')]
+    private Collection $scores;
+
     public function __construct()
     {
-        $this->scores = new ArrayCollection();
         $this->genres = new ArrayCollection();
         $this->platforms = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,33 +100,6 @@ class Game
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Score>
-     */
-    public function getScores(): Collection
-    {
-        return $this->scores;
-    }
-
-    public function addScore(Score $score): static
-    {
-        if (!$this->scores->contains($score)) {
-            $this->scores->add($score);
-            $score->addGame($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScore(Score $score): static
-    {
-        if ($this->scores->removeElement($score)) {
-            $score->removeGame($this);
-        }
 
         return $this;
     }
@@ -199,6 +172,36 @@ class Game
     public function setSummary(string $summary): static
     {
         $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Score>
+     */
+    public function getScores(): Collection
+    {
+        return $this->scores;
+    }
+
+    public function addScore(Score $score): static
+    {
+        if (!$this->scores->contains($score)) {
+            $this->scores->add($score);
+            $score->setGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScore(Score $score): static
+    {
+        if ($this->scores->removeElement($score)) {
+            // set the owning side to null (unless already changed)
+            if ($score->getGame() === $this) {
+                $score->setGame(null);
+            }
+        }
 
         return $this;
     }

@@ -35,5 +35,4 @@ class IndexController extends AbstractController
             'platforms' => $platforms
         ]);
     }
-
 }

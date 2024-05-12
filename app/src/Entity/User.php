@@ -39,7 +39,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Score>
      */
-    #[ORM\ManyToMany(targetEntity: Score::class, mappedBy: 'user')]
+    #[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'user')]
     private Collection $scores;
 
     public function __construct()
@@ -146,7 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->scores->contains($score)) {
             $this->scores->add($score);
-            $score->addUser($this);
+            $score->setUser($this);
         }
 
         return $this;
@@ -155,7 +155,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeScore(Score $score): static
     {
         if ($this->scores->removeElement($score)) {
-            $score->removeUser($this);
+            // set the owning side to null (unless already changed)
+            if ($score->getUser() === $this) {
+                $score->setUser(null);
+            }
         }
 
         return $this;

@@ -3,9 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ScoreRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ScoreRepository::class)]
@@ -16,88 +13,54 @@ class Score
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 4, scale: 0)]
-    private ?string $score = null;
+    #[ORM\Column]
+    private ?int $score = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'scores')]
-    private Collection $user;
+    #[ORM\ManyToOne(inversedBy: 'scores')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-    /**
-     * @var Collection<int, Game>
-     */
-    #[ORM\ManyToMany(targetEntity: Game::class, inversedBy: 'scores')]
-    private Collection $game;
-
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
-        $this->game = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'scores')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Game $game = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getScore(): ?string
+    public function getScore(): ?int
     {
         return $this->score;
     }
 
-    public function setScore(string $score): static
+    public function setScore(int $score): static
     {
         $this->score = $score;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUser(): Collection
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function addUser(User $user): static
+    public function setUser(?User $user): static
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeUser(User $user): static
-    {
-        $this->user->removeElement($user);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Game>
-     */
-    public function getGame(): Collection
+    public function getGame(): ?Game
     {
         return $this->game;
     }
 
-    public function addGame(Game $game): static
+    public function setGame(?Game $game): static
     {
-        if (!$this->game->contains($game)) {
-            $this->game->add($game);
-        }
-
-        return $this;
-    }
-
-    public function removeGame(Game $game): static
-    {
-        $this->game->removeElement($game);
+        $this->game = $game;
 
         return $this;
     }

@@ -31,7 +31,7 @@ class GameRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function findNextReleases($int): ?array
+    public function findNextReleases(int $numberOfGames): ?array
     {
         $currentDate = new \DateTime();
 
@@ -39,12 +39,12 @@ class GameRepository extends ServiceEntityRepository
             ->where("g.date_release > :currentDate and g.summary != ''")
             ->setParameter('currentDate', $currentDate->format('Y-m-d'))
             ->orderBy('g.date_release', 'DESC')
-            ->setMaxResults($int)
+            ->setMaxResults($numberOfGames)
             ->getQuery()
             ->getResult();
     }
 
-    public function findLastReleases($int): ?array
+    public function findLastReleases($numberOfGames): ?array
     {
         $currentDate = new \DateTime();
 
@@ -52,7 +52,7 @@ class GameRepository extends ServiceEntityRepository
             ->where("g.date_release <= :currentDate and g.summary != '' and g.date_release != ''")
             ->setParameter('currentDate', $currentDate->format('Y-m-d'))
             ->orderBy('g.date_release', 'DESC')
-            ->setMaxResults($int)
+            ->setMaxResults($numberOfGames)
             ->getQuery()
             ->getResult();
     }

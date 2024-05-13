@@ -25,7 +25,7 @@ class RegisterController extends AbstractController
     /**
      * @throws \Exception
      */
-    #[Route('/register', name: 'app_register')]
+    #[Route('/register', name: 'app_register', methods: ['POST'])]
     public function index(Request $request): Response
     {
         $params = $request->request->all();

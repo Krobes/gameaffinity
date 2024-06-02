@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/scss/advanced-search.css">
+{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="container mt-5">
+            <h1 class="section-title">
+                <span class="title-text">Advanced Search</span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="svg-icon"
+                     viewBox="0 0 24 24" fill="currentColor" role="presentation">
+                    <path d="M5.622.631A2.153 2.153 0 0 0 5 2.147c0 .568.224 1.113.622 1.515l8.249 8.34-8.25 8.34a2.16 2.16 0 0 0-.548 2.07c.196.74.768 1.317 1.499 1.515a2.104 2.104 0 0 0 2.048-.555l9.758-9.866a2.153 2.153 0 0 0 0-3.03L8.62.61C7.812-.207 6.45-.207 5.622.63z"></path>
+
+                </svg>
+            </h1>
+            <div class="row search-container">
+                <div class="col-md-6 offset-md-3">
+                    <form id="searchForm" action="{{ path("app_games_filtered") }}" method="get" target="_blank">
+                        <div class="form-group row">
+                            <div class="col-md-6 offset-md-3 mb-4">
+                                <input type="text" class="form-control" id="inputTitle" placeholder="Title"
+                                       name="title">
+                                <div class="invalid-feedback" id="titleFeedback">
+                                    The title must be at least 3 characters long.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-5">
+                            <div class="col-md-4">
+                                <select class="form-control" id="selectGenre" name="genre">
+                                    <option value="">Select genre</option>
+                                    {% for genre in genres|sort((a, b) => a.name <=> b.name) %}
+                                        <option value="{{ genre.name }}">{{ genre.name|capitalize }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control" id="selectPlatform" name="platform">
+                                    <option value="">Select platform</option>
+                                    {% for platform in platforms|sort((a, b) => a.name <=> b.name) %}
+                                        <option value="{{ platform.name }}">{{ platform.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control" id="selectDeveloper" name="developer">
+                                    <option value="">Select developer</option>
+                                    {% for developer in developers|sort((a, b) => a.name <=> b.name) %}
+                                        <option value="{{ developer.name }}">{{ developer.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 search">
+                                <button type="submit" class="btn btn-warning">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="/js/advanced-search.js"></script>
+    {% endblock %}
+{% endblock %}

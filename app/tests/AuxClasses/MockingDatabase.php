@@ -54,6 +54,7 @@ class MockingDatabase
         $user->setEmail('mock_mail@gmail.com');
         $user->setNick('Samus Aran');
         $user->setRoles(['ROLE_USER']);
+        $user->setAvatar('/avatars/avatar3.png'); //check avatar
         $user->setPassword('1'); //Puesto que no nos interesa ahora comprobar nada respecto a la pass la dejamos así
         return $user;
     }

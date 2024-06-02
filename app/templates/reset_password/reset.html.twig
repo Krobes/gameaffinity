@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('scss/reset-password.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header text-white text-center">
+                        Reset your password
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(resetForm) }}
+                        {{ form_row(resetForm.plainPassword) }}
+                        <div class="reset-passwd-btn">
+                            <button type="submit" class="btn btn-primary mt-3">Reset password</button>
+                            {{ form_end(resetForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

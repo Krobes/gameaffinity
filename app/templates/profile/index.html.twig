@@ -1,0 +1,335 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/scss/profile.css">
+{% endblock %}
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div id="flash-success-message" class="alert alert-success mb-4">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div id="flash-error-message" class="alert alert-danger mb-4">{{ message }}</div>
+    {% endfor %}
+    <div class="container bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-3 border-right bg-dark">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                    <div class="position-relative">
+                        <img class="profile-pic rounded-circle" src="{{ app.user.avatar }}" alt="Profile Picture"
+                             id="current-profile-pic">
+                    </div>
+                    <span class="text-white font-weight-bold mt-2">{{ app.user.nick }}</span>
+                    <span class="text-white mt-2">{{ app.user.email }}</span>
+                    <div class="mt-5 d-flex justify-content-between w-100 text-white">
+                        <div class="text-center">
+                            <h5>Voted Games</h5>
+                            <span>{{ votedGames }}</span>
+                        </div>
+                        <div class="text-center">
+                            <h5>Public Lists</h5>
+                            <span>{{ publicLists|length }}</span>
+                        </div>
+                        <div class="text-center">
+                            <h5>Private Lists</h5>
+                            <span>{{ privateLists|length }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for selecting avatar -->
+            <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="avatarModalLabel">Select Avatar</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                {% for i in 1..6 %}
+                                    <div class="col-4 mb-3">
+                                        <img src="/avatars/avatar{{ i }}.png" class="img-fluid selectable-avatar"
+                                             alt="Avatar {{ i }}" onclick="selectAvatar('/avatars/avatar{{ i }}.png')">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="modal-footer second-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5 border-right">
+                <div class="p-3 py-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Profile Settings</h4>
+                    </div>
+                    <form action="{{ path('app_profile_submit') }}" method="post">
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Nick</label><input type="text"
+                                                                                           class="form-control"
+                                                                                           placeholder="Nick"
+                                                                                           name="nick"
+                                                                                           value="{{ app.user.nick ?? '' }}">
+                            </div>
+                            <div class="col-md-6"><label class="labels">Email</label><input type="text"
+                                                                                            class="form-control"
+                                                                                            value="{{ app.user.email ?? '' }}"
+                                                                                            placeholder="Email"
+                                                                                            name="email"></div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-6"><label class="labels">Name</label><input type="text"
+                                                                                           class="form-control"
+                                                                                           placeholder="First name"
+                                                                                           name="name"
+                                                                                           value="{{ app.user.name ?? '' }}">
+                            </div>
+                            <div class="col-md-6"><label class="labels">Surname</label><input type="text"
+                                                                                              class="form-control"
+                                                                                              value="{{ app.user.surname ?? '' }}"
+                                                                                              placeholder="Surname"
+                                                                                              name="surname"></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12 mb-3"><label class="labels">Mobile phone</label><input type="text"
+                                                                                                         class="form-control"
+                                                                                                         placeholder="Enter phone number"
+                                                                                                         name="phone"
+                                                                                                         value="{{ app.user.phone ?? '' }}">
+                            </div>
+                            <div class="col-md-12"><label class="labels">Favourite Video game</label><input type="text"
+                                                                                                            class="form-control"
+                                                                                                            placeholder="Enter your favourite game"
+                                                                                                            name="favouriteGame"
+                                                                                                            value="{{ app.user.favouriteGame ?? '' }}">
+                            </div>
+                        </div>
+                        <div class="mt-5 text-left">
+                            <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4 bg-profile">
+                <div class="p-3 py-5">
+                    <div id="buttonModalAddPrivateList"
+                         class="d-flex justify-content-between align-items-center experience">
+                        <span id="private-list">Private lists</span><span class="border px-3 p-1 add-list"><i
+                                    class="fa fa-plus"></i>&nbsp;Add new private list</span>
+                    </div>
+                    <br>
+
+                    <!-- Modal new list -->
+                    <div class="modal fade" id="modalAddPrivateList" tabindex="-1" role="dialog"
+                         aria-labelledby="modalAddPrivateList" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">New private list!</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ path('app_create_list') }}" method="post">
+                                        <div class="form-group">
+                                            <label for="listName">List Name</label>
+                                            <input type="text" class="form-control" id="listName"
+                                                   name="listName" placeholder="Enter list name" required>
+                                        </div>
+                                        <input type="hidden" name="visibility" value="false">
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-create">Create a new private list
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for list in privateLists %}
+                        <div class="alert bg-ga d-flex justify-content-between align-items-center">
+                            <span class="divList" data-toggle="modal"
+                                  data-target="#modalWatchList{{ list.id }}">{{ list.name }}</span>
+                            <div>
+                                <form method="post" action="{{ path('app_delete_list', {'id': list.id}) }}"
+                                      class="d-inline">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ list.id) }}">
+                                    <button class="delete-button"
+                                            onclick="return confirm('Are you sure you want to delete it?');">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Modal see list-->
+                        <div class="modal fade" id="modalWatchList{{ list.id }}" tabindex="-1"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ list.name }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            {% for game in list.games %}
+                                                {% set var = game.cover %}
+                                                {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                                                {% set urlCompleta = urlBase ~ var ~ ".webp" %}
+                                                <div class="col-md-4 mb-3">
+                                                    <div class="card h-100">
+                                                        <a href="{{ path('app_game_show', {'id': game.id}) }}"
+                                                           target="_blank">
+                                                            <img src="{{ urlCompleta }}" class="card-img-top"
+                                                                 alt="Pic of {{ game.name }}">
+                                                        </a>
+                                                        <div class="card-body">
+                                                            <h4 class="card-title">{{ game.name }}</h4>
+                                                            <h6 class="card-subtitle text-muted">{{ game.dateRelease|date('F j, Y') }}</h6>
+                                                        </div>
+                                                        <!-- Button to delete the game -->
+                                                        <form method="post"
+                                                              action="{{ path('app_remove_game_list', {'id': list.id}) }}"
+                                                              class="d-inline w-100">
+                                                            <input type="hidden" name="gameRemove"
+                                                                   value="{{ game.id }}">
+                                                            <button class="btn btn-danger btn-sm w-100 d-block delete-game"
+                                                                    onclick="return confirm('Are you sure you want to remove the game from the list?');">
+                                                                X
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer second-footer">
+                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5 mb-5">
+        <div class="col-md-12 bg-profile rounded">
+            <div class="p-3 py-5">
+                <div id="buttonModalAddPublicList" class="d-flex gap-4 experience">
+                    <span id="public-list">Public lists</span><span class="border px-3 p-1 add-list"><i
+                                class="fa fa-plus"></i>&nbsp;Add new public list</span>
+                </div>
+                <br>
+
+                <!-- Modal new list -->
+                <div class="modal fade" id="modalAddPublicList" tabindex="-1" role="dialog"
+                     aria-labelledby="modalAddPublicListLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New public list!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ path('app_create_list') }}" method="post">
+                                    <div class="form-group">
+                                        <label for="listName">List Name</label>
+                                        <input type="text" class="form-control" id="listName" name="listName"
+                                               placeholder="Enter list name" required>
+                                    </div>
+                                    <input type="hidden" name="visibility" value="true">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" class="btn btn-create">Create a new public list</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for list in publicLists %}
+                    <div class="alert bg-ga d-flex justify-content-between align-items-center">
+                        <span class="divList" data-bs-toggle="modal"
+                              data-bs-target="#modalWatchList{{ list.id }}">{{ list.name }}</span>
+                        <div>
+                            <form method="post" action="{{ path('app_delete_list', {'id': list.id}) }}"
+                                  class="d-inline">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ list.id) }}">
+                                <button class="delete-button"
+                                        onclick="return confirm('Are you sure you want to delete it?');">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Modal see list-->
+                    <div class="modal fade" id="modalWatchList{{ list.id }}" tabindex="-1"
+                         aria-labelledby="modalWatchList{{ list.id }}Label" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalWatchList{{ list.id }}Label">{{ list.name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        {% for game in list.games %}
+                                            {% set var = game.cover %}
+                                            {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                                            {% set urlCompleta = urlBase ~ var ~ ".webp" %}
+                                            <div class="col-md-4 mb-3">
+                                                <div class="card h-100">
+                                                    <a href="{{ path('app_game_show', {'id': game.id}) }}"
+                                                       target="_blank">
+                                                        <img src="{{ urlCompleta }}" class="card-img-top"
+                                                             alt="Pic of {{ game.name }}">
+                                                    </a>
+                                                    <div class="card-body">
+                                                        <h4 class="card-title">{{ game.name }}</h4>
+                                                        <h6 class="card-subtitle text-muted">{{ game.dateRelease|date('F j, Y') }}</h6>
+                                                    </div>
+                                                    <!-- Button to delete the game -->
+                                                    <form method="post"
+                                                          action="{{ path('app_remove_game_list', {'id': list.id}) }}"
+                                                          class="d-inline w-100">
+                                                        <input type="hidden" name="gameRemove"
+                                                               value="{{ game.id }}">
+                                                        <button class="btn btn-danger btn-sm w-100 d-block delete-game"
+                                                                onclick="return confirm('Are you sure you want to remove the game from the list?');">
+                                                            X
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="modal-footer second-footer">
+                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="/js/profile.js"></script>
+    <script src="/js/alerts.js"></script>
+{% endblock %}

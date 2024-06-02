@@ -56,4 +56,43 @@ class GameRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getAverageScore($gameId)
+    {
+        $query = $this->createQueryBuilder('g')
+            ->select('AVG(s.score) AS averageScore')
+            ->leftJoin('g.scores', 's')
+            ->andWhere('g.id = :gameId')
+            ->setParameter('gameId', $gameId)
+            ->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
+
+    public function getVotesGame($gameId)
+    {
+        $query = $this->createQueryBuilder('g')
+            ->select('COUNT(s.id) AS votes')
+            ->leftJoin('g.scores', 's')
+            ->andWhere('g.id = :gameId')
+            ->setParameter('gameId', $gameId)
+            ->getQuery();
+
+        return $query->getSingleScalarResult();
+    }
+
+    public function getTopRatedGames($limit = 10)
+    {
+        $query = $this->createQueryBuilder('g')
+            ->select('g, AVG(s.score) AS avgScore, COUNT(s.id) AS votes')
+            ->leftJoin('g.scores', 's')
+            ->groupBy('g.id')
+            ->having('votes > 0')
+            ->orderBy('avgScore', 'DESC')
+            ->addOrderBy('votes', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery();
+        return $query->getResult();
+    }
+
 }

@@ -1,0 +1,104 @@
+body {
+  background-image: url("../img/background.jpg");
+}
+
+.bg-profile {
+  background-color: #FFC107;
+}
+
+#private-list, #public-list {
+  font-size: 1.5rem;
+  color: black;
+}
+
+.bg-ga {
+  background-color: #875de5;
+  border-color: #443ea2;
+  color: white;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #875de5
+}
+
+.profile-button {
+  background: #443ea2;
+  box-shadow: none;
+  border: none
+}
+
+.profile-button:hover {
+  background: #875de5
+}
+
+.profile-button:focus {
+  background: #875de5;
+  box-shadow: none
+}
+
+.profile-button:active {
+  background: #443ea2;
+  box-shadow: none
+}
+
+.back:hover {
+  color: #875de5;
+  cursor: pointer
+}
+
+.labels {
+  font-size: 11px
+}
+
+.add-list {
+  background: #443ea2;
+  color: white;
+}
+
+.modal-header, .second-footer, .btn-create {
+  background-color: #875de5;
+  color: white;
+}
+
+.btn-create:hover {
+  background-color: #443ea2;
+  color: white;
+}
+
+.add-list:hover {
+  background: #875de5;
+  cursor: pointer;
+}
+
+.divList:hover {
+  cursor: pointer;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+}
+
+.modal-body {
+  background-color: #FFC107;
+}
+
+.edit-bt {
+  color: #FFC107;
+}
+
+.edit-bt:hover {
+  color: #a17a03;
+}
+
+.profile-pic {
+  position: relative;
+  height: 150px;
+  width: 150px;
+}
+
+.profile-pic:hover {
+  cursor: pointer;
+  opacity: 0.4;
+}

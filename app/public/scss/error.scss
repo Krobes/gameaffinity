@@ -1,0 +1,15 @@
+body {
+  background-color: #443ea2;
+}
+
+.error-msg {
+  color: white !important;
+}
+
+.btn-error {
+  color: black;
+  background-color: #FFC107;
+  &:hover {
+    background-color: #b28e14;
+  }
+}

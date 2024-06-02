@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/scss/game-info.css">
+    <link rel="stylesheet" href="/scss/profile.css">
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div id="flash-success-message" class="alert alert-success mb-4">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div id="flash-error-message" class="alert alert-danger mb-4">{{ message }}</div>
+    {% endfor %}
+    <div class="container game-info-container mt-5 p-4 rounded shadow-sm">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <h1 class="game-title">{{ game.name }} ({{ game.dateRelease|date('Y') }}) </h1>
+                <hr>
+                <p class="game-detail"><strong>Release Date:</strong> {{ game.dateRelease|date('d/m/Y') }}</p>
+                <p class="game-detail"><strong>Developer:</strong><a
+                            href="{{ path('app_games_filtered', {developer: game.developer.name}) }}">
+                        {{ game.developer.name }}</a>
+                </p>
+                <p class="game-detail"><strong>Platforms:</strong>
+                    {% for platform in game.platforms %}
+                    <a href="{{ path('app_games_filtered', {platform: platform.name}) }}"
+                    >
+                        {{ platform.name|capitalize }}</a>{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+                <p class="game-detail game-genres"><strong>Genres:</strong>
+                    {% for genre in game.genres %}
+                        <a href="{{ path('app_games_filtered', {genre: genre.name}) }}"
+                        >
+                            {{ genre.name|capitalize }}{% if not loop.last %}, {% endif %} </a>
+                    {% endfor %}
+                </p>
+                <hr>
+                <p class="game-detail"><strong>Summary:</strong></p>
+                <p class="game-summary">{{ game.summary }}</p>
+                <hr class="pb-3">
+                {% if app.user %}
+                    <div class="d-flex justify-content-between mb-3">
+                        <button class="btn btn-create me-2" data-bs-toggle="modal"
+                                data-bs-target="#addToListModal{{ game.id }}">Add game to list
+                        </button>
+
+                        <!-- Puntuación del juego -->
+                        <div class="game-rating d-flex align-items-center">
+                            <form action="{{ path('app_rate_game', {'id': game.id}) }}" method="post"
+                                  class="d-flex align-items-center">
+                                <label for="score" class="form-label mb-0 me-2"><strong>Rate this
+                                        game:</strong></label>
+                                <select id="score" name="score" class="form-select w-auto d-inline-block me-2">
+                                    {% if userVote is null %}
+                                        <option value="0" selected>Not Rated Yet</option>
+                                    {% endif %}
+                                    {% for i in 1..10 %}
+                                        <option value="{{ i }}" {% if i == userVote %} selected {% endif %}>{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button id="rate-submit-button" type="submit" class="btn btn-create">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="d-flex justify-content-between mb-3">
+                        <a href="{{ path('app_login') }}">
+                            <button class="btn btn-create me-2"> Sign Up or Log In to Vote
+                            </button>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Modal to add game to list -->
+            <div class="modal fade text-dark" id="addToListModal{{ game.id }}" tabindex="-1"
+                 aria-labelledby="addToListModalLabel{{ game.id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addToListModalLabel{{ game.id }}">Add
+                                "{{ game.name }}" to a List</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert">
+                                <h5 class="mb-4">Select a list/lists to add "{{ game.name }}"</h5>
+                                <form id="addToListForm{{ game.id }}"
+                                      action="{{ path('app_add_game_list', {'id': game.id}) }}"
+                                      method="post">
+                                    <h6>Private lists: </h6>
+                                    {% for list in privateLists %}
+                                        {% if list.games|length != 9 %}
+                                            <div class="list-item mb-2">
+                                                <span>{{ list.name }}</span>
+                                                {% if game not in list.games %}
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input ga-switch"
+                                                               type="checkbox"
+                                                               name="selectedLists[]"
+                                                               value="{{ list.id }}"
+                                                               id="flexSwitchCheckDefault{{ list.id }}"
+                                                               onchange="checkSaveButton('addToListModal{{ game.id }}')">
+                                                        <label class="form-check-label"
+                                                               for="flexSwitchCheckDefault{{ list.id }}"></label>
+                                                    </div>
+                                                {% else %}
+                                                    <p>Already added</p>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <h6 class="mt-4">Public lists: </h6>
+                                    {% for list in publicLists %}
+                                        {% if list.games|length != 9 %}
+                                            <div class="list-item mb-2">
+                                                <span>{{ list.name }}</span>
+                                                {% if game not in list.games %}
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input ga-switch"
+                                                               type="checkbox"
+                                                               name="selectedLists[]"
+                                                               value="{{ list.id }}"
+                                                               id="flexSwitchCheckDefault{{ list.id }}"
+                                                               onchange="checkSaveButton('addToListModal{{ game.id }}')">
+                                                        <label class="form-check-label"
+                                                               for="flexSwitchCheckDefault{{ list.id }}"></label>
+                                                    </div>
+                                                {% else %}
+                                                    <p>Already added</p>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer second-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close
+                            </button>
+                            <button type="submit" form="addToListForm{{ game.id }}"
+                                    id="saveButton{{ game.id }}" class="btn btn-warning saveButton"
+                                    disabled>Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 text-center">
+                {% set var = game.cover %}
+                {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                {% set urlCompleta = urlBase ~ var ~ ".webp" %}
+                <img src="{{ urlCompleta }}" class="img-thumbnail game-cover" alt="{{ game.name }}">
+                <div class="mt-3 gap-4 bg-dark ga-score-votes">
+                    <div class="game-score text-center me-3">
+                        <p class="score-label">Avg. Score:</p>
+                        <p class="score-value">{% if avgScore %} {{ avgScore|round(1)|number_format(1, '.', ',') }} {% else %} - {% endif %}</p>
+                    </div>
+                    <div class="game-votes text-center">
+                        <p class="votes-label">Votes:</p>
+                        <p class="votes-value">{{ votes }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/filtered-games.js"></script>
+    <script src="/js/rating.js"></script>
+    <script src="/js/alerts.js"></script>
+{% endblock %}

@@ -1,0 +1,90 @@
+body {
+  background-image: url("../img/background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  color: #ffc107;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.table-responsive {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table {
+  margin-bottom: 0;
+  color: #fff;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.table thead th {
+  background-color: #443EA2;
+  border-color: #444;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: white !important;
+}
+
+.text-warning {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.game-cover {
+  width: 50px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75); /* Sombra del texto */
+  margin-bottom: 2%;
+  font-size: 2rem;
+}
+
+.title-text::before {
+  content: "";
+  display: inline-block;
+  width: 0.2em;
+  height: 0.75em;
+  background-color: #FFC107;
+  margin-right: 0.1em;
+  border-radius: 0.2em;
+}
+
+.svg-icon {
+  width: 24px;
+  height: 24px;
+  fill: #FFC107;
+  margin-right: 10px;
+}
+
+.title-text {
+  margin-right: 10px;
+}
+
+/*# sourceMappingURL=ranking.css.map */

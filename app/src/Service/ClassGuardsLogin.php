@@ -28,12 +28,12 @@ class ClassGuardsLogin
         ]);
 
         if (!empty($emailExist)) {
-            $this->errors[] = 'El email o nick introducido ya existe';
+            $this->errors[] = 'The email or nick already exists';
             return false;
         }
 
         if (!empty($nickExist)) {
-            $this->errors[] = 'El email o nick introducido ya existe';
+            $this->errors[] = 'The email or nick already exists';
             return false;
         }
         return true;
@@ -47,7 +47,7 @@ class ClassGuardsLogin
         $specialChars = preg_match('@\W@', $password);
 
         if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-            $this->errors[] = 'La contraseña no es lo suficientemente segura';
+            $this->errors[] = 'The password is not strong enough. It must contain at least one uppercase letter, one lowercase letter, one symbol, and be at least 8 characters long';
             return false;
         }
 
@@ -57,7 +57,7 @@ class ClassGuardsLogin
     public function guardAgainstDifferentPasswords($firstPassword, $secondPassword): bool
     {
         if ($firstPassword != $secondPassword) {
-            $this->errors[] = 'Las contraseñas no coinciden';
+            $this->errors[] = 'Passwords don\'t match';
             return false;
         }
         return true;

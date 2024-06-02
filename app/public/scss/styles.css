@@ -137,10 +137,6 @@ h1, .h1 {
     margin-right: auto;
 }
 
-.dashboard-nav a {
-    color: #515151;
-}
-
 .dashboard-nav a:hover {
     text-decoration: none;
 }
@@ -151,6 +147,11 @@ h1, .h1 {
 
 .dashboard-nav a {
     color: #fff;
+    font-family: "Rubik", sans-serif;
+}
+
+.dashboard-nav i {
+    color: #FFC107;
 }
 
 .brand-logo {
@@ -352,6 +353,7 @@ h1, .h1 {
     background-color: rgba(236, 238, 239, 0.3);
 }
 
+
 @media (min-width: 992px) {
     .dashboard-app {
         margin-left: 238px;
@@ -360,6 +362,39 @@ h1, .h1 {
     .dashboard-compact .dashboard-app {
         margin-left: 0;
     }
+}
+
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding-top: 50px;
+}
+
+.footer h5 {
+    color: #443EA2;
+    font-weight: bold;
+}
+
+.footer a {
+    color: #fff;
+}
+
+.footer a:hover {
+    color: #ccc;
+}
+
+.footer-contact i {
+    color: #fff;
+    margin-right: 10px;
+}
+
+.footer-social a {
+    color: #fff;
+    margin-right: 10px;
+}
+
+.footer-social a:hover {
+    color: #ccc;
 }
 
 

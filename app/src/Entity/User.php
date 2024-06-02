@@ -43,9 +43,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'user')]
     private Collection $scores;
 
+    /**
+     * @var Collection<int, PersonalList>
+     */
+    #[ORM\OneToMany(targetEntity: PersonalList::class, mappedBy: 'user')]
+    private Collection $personalLists;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $surname = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $favourite_game = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $avatar = null;
+
     public function __construct()
     {
         $this->scores = new ArrayCollection();
+        $this->personalLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +183,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $score->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonalList>
+     */
+    public function getPersonalLists(): Collection
+    {
+        return $this->personalLists;
+    }
+
+    public function addPersonalList(PersonalList $personalList): static
+    {
+        if (!$this->personalLists->contains($personalList)) {
+            $this->personalLists->add($personalList);
+            $personalList->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonalList(PersonalList $personalList): static
+    {
+        if ($this->personalLists->removeElement($personalList)) {
+            // set the owning side to null (unless already changed)
+            if ($personalList->getUser() === $this) {
+                $personalList->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+    public function setSurname(?string $surname): static
+    {
+        $this->surname = $surname;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getFavouriteGame(): ?string
+    {
+        return $this->favourite_game;
+    }
+
+    public function setFavouriteGame(?string $favourite_game): static
+    {
+        $this->favourite_game = $favourite_game;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(string $avatar): static
+    {
+        $this->avatar = $avatar;
 
         return $this;
     }

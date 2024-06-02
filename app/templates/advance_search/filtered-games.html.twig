@@ -1,0 +1,179 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/scss/filtered-games.css">
+    <link rel="stylesheet" href="/scss/profile.css">
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div id="flash-success-message" class="alert alert-success mb-4">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div id="flash-error-message" class="alert alert-danger mb-4">{{ message }}</div>
+    {% endfor %}
+    <main>
+        <div class="container mt-5">
+            <h1 class="section-title">
+                <span class="title-text">Advanced Search</span>
+                <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="svg-icon"
+                     viewBox="0 0 24 24" fill="currentColor" role="presentation">
+                    <path d="M5.622.631A2.153 2.153 0 0 0 5 2.147c0 .568.224 1.113.622 1.515l8.249 8.34-8.25 8.34a2.16 2.16 0 0 0-.548 2.07c.196.74.768 1.317 1.499 1.515a2.104 2.104 0 0 0 2.048-.555l9.758-9.866a2.153 2.153 0 0 0 0-3.03L8.62.61C7.812-.207 6.45-.207 5.622.63z"></path>
+                </svg>
+            </h1>
+            {% if filters is not empty %}
+                <div class="container mt-4">
+                    <div class="row">
+                        {% for key, filter in filters %}
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                                <div class="filter-card p-3 text-center">
+                                    <h5 class="mb-0">{{ key|capitalize }}</h5>
+                                    {% if filter == '' %}
+                                        <p class="mb-0">No filter</p>
+                                    {% else %}
+                                        <p class="mb-0">{{ filter|capitalize }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="container mt-5">
+                <div class="row">
+                    {% for game in pager %}
+                        {% set var = game.cover %}
+                        {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                        {% set urlCompleta = urlBase ~ var ~ ".webp" %}
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                            <div class="card w-100">
+                                {% if game.cover is not empty %}
+                                    <img src="{{ urlCompleta }}" class="card-img-top" alt="{{ game.name }}">
+                                {% else %}
+                                    <img src="{{ urlBase ~ 'nocover.webp' }}" class="card-img-top"
+                                         alt="{{ game.name }}">
+                                {% endif %}
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">Release
+                                        date: {{ game.dateRelease|date("d/m/Y") }}</h6>
+                                    <h4 class="card-title title-limit">{{ game.name }}</h4>
+                                    {% if game.summary == '' %}
+                                        <p class="card-text summary">No information available</p>
+                                    {% else %}
+                                        <p class="card-text summary">{{ game.summary }}</p>
+                                    {% endif %}
+                                    <div class="mt-auto d-flex justify-content-between">
+                                        <a href="{{ path('app_game_show', {'id': game.id}) }}"">
+                                        <button class="btn btn-warning">View details</button>
+                                        </a>
+                                        {% if app.user %}
+                                            <button class="btn btn-create" data-bs-toggle="modal"
+                                                    data-bs-target="#addToListModal{{ game.id }}">+
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal to add game to list -->
+                        <div class="modal fade text-dark" id="addToListModal{{ game.id }}" tabindex="-1"
+                             aria-labelledby="addToListModalLabel{{ game.id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addToListModalLabel{{ game.id }}">Add
+                                            "{{ game.name }}" to a List</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="alert">
+                                            <h5 class="mb-4">Select a list/lists to add "{{ game.name }}"</h5>
+                                            <form id="addToListForm{{ game.id }}"
+                                                  action="{{ path('app_add_game_list', {'id': game.id}) }}"
+                                                  method="post">
+                                                <h6>Private lists: </h6>
+                                                {% for list in privateLists %}
+                                                    {% if list.games|length != 9 %}
+                                                        <div class="list-item mb-2">
+                                                            <span>{{ list.name }}</span>
+                                                            {% if game not in list.games %}
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input ga-switch"
+                                                                           type="checkbox"
+                                                                           name="selectedLists[]"
+                                                                           value="{{ list.id }}"
+                                                                           id="flexSwitchCheckDefault{{ list.id }}"
+                                                                           onchange="checkSaveButton('addToListModal{{ game.id }}')">
+                                                                    <label class="form-check-label"
+                                                                           for="flexSwitchCheckDefault{{ list.id }}"></label>
+                                                                </div>
+                                                            {% else %}
+                                                                <p>Already added</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <h6 class="mt-4">Public lists: </h6>
+                                                {% for list in publicLists %}
+                                                    {% if list.games|length != 9 %}
+                                                        <div class="list-item mb-2">
+                                                            <span>{{ list.name }}</span>
+                                                            {% if game not in list.games %}
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input ga-switch"
+                                                                           type="checkbox"
+                                                                           name="selectedLists[]"
+                                                                           value="{{ list.id }}"
+                                                                           id="flexSwitchCheckDefault{{ list.id }}"
+                                                                           onchange="checkSaveButton('addToListModal{{ game.id }}')">
+                                                                    <label class="form-check-label"
+                                                                           for="flexSwitchCheckDefault{{ list.id }}"></label>
+                                                                </div>
+                                                            {% else %}
+                                                                <p>Already added</p>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer second-footer">
+                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close
+                                        </button>
+                                        <button type="submit" form="addToListForm{{ game.id }}"
+                                                id="saveButton{{ game.id }}" class="btn btn-warning saveButton"
+                                                disabled>Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="container mt-3">
+                        <div class="row">
+                            {% if pager.count == 0 %}
+                                <div class="col-12 text-center text-white">
+                                    <img src="/img/not_found.png" alt="No results found" class="no-results-icon">
+                                    <p class="no-results-text">Oops! No results found related to your search. Please try
+                                        again
+                                        with different filters.</p>
+                                </div>
+                            {% else %}
+                                {% for game in pager %}
+                                    <!-- Renderización de los juegos -->
+                                {% endfor %}
+                                <div class="pager mt-4">
+                                    {{ pagerfanta(pager) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+    </main>
+    <script src="/js/filtered-games.js"></script>
+    <script src="/js/alerts.js"></script>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Server Error</title>
+    <link href="/scss/bootstrap-5.3.3/scss/bootstrap.css" rel="stylesheet">
+    <link href="/scss/error.css" rel="stylesheet">
+</head>
+<body>
+<div class="container text-center mt-5">
+    <h1 class="display-1 text-danger">500</h1>
+    <h2 class="display-4 error-msg">Internal Server Error</h2>
+    <p class="lead">Sorry, something went wrong on our end. Please try again later.</p>
+    <a href="{{ path('app_index') }}" class="btn btn-error mt-3">Go to Homepage</a>
+</div>
+</body>
+</html>
+

@@ -49,11 +49,18 @@ class Game
     #[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'game')]
     private Collection $scores;
 
+    /**
+     * @var Collection<int, PersonalList>
+     */
+    #[ORM\ManyToMany(targetEntity: PersonalList::class, mappedBy: 'games')]
+    private Collection $personalLists;
+
     public function __construct()
     {
         $this->genres = new ArrayCollection();
         $this->platforms = new ArrayCollection();
         $this->scores = new ArrayCollection();
+        $this->personalLists = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,6 +208,33 @@ class Game
             if ($score->getGame() === $this) {
                 $score->setGame(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PersonalList>
+     */
+    public function getPersonalLists(): Collection
+    {
+        return $this->personalLists;
+    }
+
+    public function addPersonalList(PersonalList $personalList): static
+    {
+        if (!$this->personalLists->contains($personalList)) {
+            $this->personalLists->add($personalList);
+            $personalList->addGame($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonalList(PersonalList $personalList): static
+    {
+        if ($this->personalLists->removeElement($personalList)) {
+            $personalList->removeGame($this);
         }
 
         return $this;

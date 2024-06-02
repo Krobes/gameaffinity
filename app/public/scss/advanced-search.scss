@@ -1,0 +1,52 @@
+.search-container {
+  margin-top: 20px;
+}
+
+.section-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.75);
+  margin-bottom: 5%;
+  font-size: 2.5rem;
+}
+
+.title-text::before {
+  content: '';
+  display: inline-block;
+  width: 0.2em;
+  height: 0.75em;
+  background-color: #FFC107;
+  margin-right: 0.1em;
+  border-radius: 0.2em;
+}
+
+
+.svg-icon {
+  width: 24px;
+  height: 24px;
+  fill: #FFC107;
+  margin-right: 10px;
+}
+
+.title-text {
+  margin-right: 10px;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.btn {
+  padding: 10px 40px;
+}
+
+.dashboard-app {
+  background-image: url("../img/background.jpg");
+  background-size: cover;
+}

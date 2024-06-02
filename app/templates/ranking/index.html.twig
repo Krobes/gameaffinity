@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/scss/ranking.css">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="section-title">
+            <span class="title-text">Top rated games</span>
+            <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" class="svg-icon"
+                 viewBox="0 0 24 24" fill="currentColor" role="presentation">
+                <path d="M5.622.631A2.153 2.153 0 0 0 5 2.147c0 .568.224 1.113.622 1.515l8.249 8.34-8.25 8.34a2.16 2.16 0 0 0-.548 2.07c.196.74.768 1.317 1.499 1.515a2.104 2.104 0 0 0 2.048-.555l9.758-9.866a2.153 2.153 0 0 0 0-3.03L8.62.61C7.812-.207 6.45-.207 5.622.63z"></path>
+            </svg>
+        </h1>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-dark text-center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Cover</th>
+                    <th scope="col">Game</th>
+                    <th scope="col">Developer</th>
+                    <th scope="col">Avg. Score</th>
+                    <th scope="col">Votes</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in topRatedGames %}
+                    {% set var = entry[0].cover %}
+                    {% set urlBase = "https://images.igdb.com/igdb/image/upload/t_1080p/" %}
+                    {% set urlCompleta = urlBase ~ var ~ ".png" %}
+                    <tr class="text-center" onclick="location.href='{{ path('app_game_show', {id: entry[0].id}) }}';"
+                        style="cursor: pointer;">
+                        <th scope="row">{{ loop.index }}</th>
+                        <td><img src="{{ urlCompleta }}" alt="Cover" class="img-thumbnail game-cover"></td>
+                        <td>{{ entry[0].name }}</td>
+                        <td>{{ entry[0].developer.name }}</td>
+                        <td class="text-warning fw-bold">{{ entry['avgScore']|round(1) }}</td>
+                        <td>{{ entry['votes'] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

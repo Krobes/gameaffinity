@@ -45,46 +45,53 @@ $options = [
 ];
 
 foreach ($developers as $k => $developer) {
-    foreach ($developer->developed as $gameId) {
-        $body = "fields *; where id=" . $gameId . ';';
-        $options[CURLOPT_POSTFIELDS] = $body;
-        curl_setopt_array($curl, $options);
-        $gameDeveloper = json_decode(curl_exec($curl));
-        $developerObj = $entityManager->getRepository(Developer::class)->find($developer->id);
+    try {
+        foreach ($developer->developed as $gameId) {
+            $body = "fields *; where id=" . $gameId . ';';
+            $options[CURLOPT_POSTFIELDS] = $body;
+            curl_setopt_array($curl, $options);
+            $gameDeveloper = json_decode(curl_exec($curl));
+            $developerObj = $entityManager->getRepository(Developer::class)->find($developer->id);
 
-        if (!empty($gameDeveloper) && !empty($gameDeveloper[0]->release_dates[0])) {
-            $game = new Game();
-            $game->setId($gameDeveloper[0]->id);
-            $game->setName($gameDeveloper[0]->name);
-            if (isset($gameDeveloper[0]->summary)) {
-                $game->setSummary($gameDeveloper[0]->summary);
-            } else {
-                $game->setSummary('');
-            }
-            $release_date = new DateTime();
-            $game->setDateRelease(date('Y-m-d', getReleaseDate($gameDeveloper[0]->release_dates[0])));
-            $game->setDeveloper($developerObj);
-            if (isset($gameDeveloper[0]->genres)) {
-                foreach ($gameDeveloper[0]->genres as $genre) {
-                    $game->addGenre($entityManager->getRepository(Genre::class)->find($genre));
+            if (!empty($gameDeveloper) && !empty($gameDeveloper[0]->release_dates[0])) {
+                $game = $entityManager->getRepository(Game::class)->find($gameId);
+                if (!$game) {
+                    $game = new Game();
+                    $game->setId($gameDeveloper[0]->id);
                 }
-            }
-            if (isset($gameDeveloper[0]->platforms)) {
-                foreach ($gameDeveloper[0]->platforms as $platform) {
-                    $game->addPlatform($entityManager->getRepository(Platform::class)->find($platform));
+                $game->setName($gameDeveloper[0]->name);
+                if (isset($gameDeveloper[0]->summary)) {
+                    $game->setSummary($gameDeveloper[0]->summary);
+                } else {
+                    $game->setSummary('');
                 }
+                $release_date = new DateTime();
+                $game->setDateRelease(date('Y-m-d', getReleaseDate($gameDeveloper[0]->release_dates[0])));
+                $game->setDeveloper($developerObj);
+                if (isset($gameDeveloper[0]->genres)) {
+                    foreach ($gameDeveloper[0]->genres as $genre) {
+                        $game->addGenre($entityManager->getRepository(Genre::class)->find($genre));
+                    }
+                }
+                if (isset($gameDeveloper[0]->platforms)) {
+                    foreach ($gameDeveloper[0]->platforms as $platform) {
+                        $game->addPlatform($entityManager->getRepository(Platform::class)->find($platform));
+                    }
+                }
+                if (isset($gameDeveloper[0]->cover)) {
+                    $game->setCover(findCover($gameDeveloper[0]->cover, $headers));
+                } else {
+                    $game->setCover('');
+                }
+                $entityManager->persist($game);
             }
-            if (isset($gameDeveloper[0]->cover)) {
-                $game->setCover(findCover($gameDeveloper[0]->cover, $headers));
-            } else {
-                $game->setCover('');
-            }
-            $entityManager->persist($game);
+
         }
-
+        $entityManager->flush();
+        print_r('Desarrolladora ' . $k . ' completa.' . PHP_EOL);
+    } catch (Exception $e) {
+        print_r('Error procesando desarrolladora ' . $k . ': ' . $e->getMessage() . PHP_EOL);
     }
-    $entityManager->flush();
-    print_r('Desarrolladora ' . $k . ' completa.' . PHP_EOL);
 }
 
 

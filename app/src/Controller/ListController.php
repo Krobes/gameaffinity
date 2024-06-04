@@ -67,7 +67,7 @@ class ListController extends AbstractController
         Security $security,
         int $id
     ): Response {
-        $this->guardsParams->guardAgainstInvalidId($this->entityManager->getRepository(PersonalList::class)->find($id));
+        $this->guardsParams->guardAgainstInvalidId($this->entityManager->getRepository(Game::class)->find($id));
         $referer = $request->headers->get('referer');
         $listsId = $request->request->all('selectedLists');
         $this->guardsParams->guardAgainstInvalidParam($listsId);

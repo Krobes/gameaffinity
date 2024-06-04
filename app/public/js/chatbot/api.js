@@ -1,4 +1,4 @@
-const API_KEY_CHATGPT = ""; //WRITE YOUR API KEY HERE
+//const API_KEY_CHATGPT = ""; Uncomment that lane and adding your key!
 
 export const URL_CHATGPT =
     "https://chatgpt-best-price.p.rapidapi.com/v1/chat/completions";

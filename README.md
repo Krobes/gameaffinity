@@ -1,4 +1,7 @@
 [![codecov](https://codecov.io/github/Krobes/gameaffinity/graph/badge.svg?token=764M1XO82Z)](https://codecov.io/github/Krobes/gameaffinity)
+![PHP](https://img.shields.io/badge/PHP-8.3-blue)
+![Symfony](https://img.shields.io/badge/Symfony-6.4.7-black)
+![Docker](https://img.shields.io/badge/Docker-26.1.3-lightblue)
 
 # Project Gameaffinity
 
@@ -13,6 +16,7 @@ opinions.
 
 ## Table of Contents
 
+- [Versions](#versions)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Deployment](#deployment)
@@ -21,6 +25,16 @@ opinions.
 - [Contributing](#contributing)
 - [Sources of Information](#sources-of-information)
 - [Contact](#contact)
+
+## Versions
+
+### Symfony
+
+I chose version 6.4 because it is the latest version in the 6.x series and will be maintained until almost 2027, with additional time for security fixes.
+
+### Docker
+
+Initially, I started deploying my containers using Docker version 23. However, after experiencing a security breach through the PHP container and port 9000, I upgraded to version 26.1.3, which resolved the issues.
 
 ## Prerequisites
 
@@ -57,11 +71,51 @@ Clone the repository to your local machine:
 ```sh
 git clone https://github.com/Krobes/gameaffinity.git
 cd gameaffinity
-docker-compose up
+docker-compose up -d
 
 ````
 
 ## Deployment
+
+### Env file
+```env
+APP_ENV=prod
+APP_SECRET=your_app_secret_here
+
+# Example configuration for SQLite
+# DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
+
+# Example configuration for MySQL
+DATABASE_URL="mysql://user:password@127.0.0.1:3306/database_name?serverVersion=8.0&charset=utf8mb4"
+
+# Example configuration for MariaDB
+# DATABASE_URL="mysql://user:password@127.0.0.1:3306/database_name?serverVersion=10.5&charset=utf8mb4"
+
+# Example configuration for PostgreSQL
+# DATABASE_URL="postgresql://user:password@127.0.0.1:5432/database_name?serverVersion=13&charset=utf8"
+
+MAILER_DSN=smtp://username:password@smtp.example.com:587
+
+````
+
+### Composer Install
+It's important to have the .env configured before running the following command, as one of the bundles used: Dotenv, requires the existence of the file for its installation.
+
+```sh
+composer install
+```
+
+### API Chatbot
+
+In the path app/public/js/chatbot/api.js you will need to add a valid key for the ChatGPT Best Price API from RapidApi.
+
+URL: https://rapidapi.com/truongvuhung102/api/chatgpt-best-price
+
+```js
+const API_KEY_CHATGPT = "";
+```
+
+If you have followed these steps, you should now be able to access localhost:8081 and see Gameaffinity deployed!
 
 ## Usage
 

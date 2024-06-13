@@ -9,7 +9,6 @@ class IsRatedYet
         if (!$score) {
             return false;
         }
-
         return true;
     }
 }

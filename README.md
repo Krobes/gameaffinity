@@ -5,6 +5,10 @@
 
 # Project Gameaffinity
 
+<div style="text-align: center; padding-bottom: 5px;">
+    <img src="images/logo.png" alt="Gameaffinity_Logo" width="200"/>
+</div>
+
 Gameaffinity is a web application where you can browse through our extensive
 database of over 2000 games and perform advanced searches by developer,
 genre, platform, and more. Additionally, enjoy the benefits of registering,
@@ -30,11 +34,13 @@ opinions.
 
 ### Symfony
 
-I chose version 6.4 because it is the latest version in the 6.x series and will be maintained until almost 2027, with additional time for security fixes.
+I chose version 6.4 because it is the latest version in the 6.x series and will be maintained until almost 2027, with
+additional time for security fixes.
 
 ### Docker
 
-Initially, I started deploying my containers using Docker version 23. However, after experiencing a security breach through the PHP container and port 9000, I upgraded to version 26.1.3, which resolved the issues.
+Initially, I started deploying my containers using Docker version 23. However, after experiencing a security breach
+through the PHP container and port 9000, I upgraded to version 26.1.3 and close ports, which resolved the issues.
 
 ## Prerequisites
 
@@ -44,9 +50,8 @@ Before getting started, make sure you have the following prerequisites installed
 
 Additionally, to run dockers we use next ports:
 
-- Nginx: 8081
+- Nginx: 81
 - MySQL: 4306
-- PHP: 9000
 
 If any of these ports are not available, follow these steps:
 
@@ -62,7 +67,7 @@ If any of these ports are not available, follow these steps:
          container_name: nginx
          image: nginx:stable-alpine
          ports:
-             - '8082:80'
+             - '8080:80'
 
 ## Installation
 
@@ -78,6 +83,7 @@ docker-compose up -d
 ## Deployment
 
 ### Env file
+
 ```env
 APP_ENV=prod
 APP_SECRET=your_app_secret_here
@@ -99,11 +105,27 @@ MAILER_DSN=smtp://username:password@smtp.example.com:587
 ````
 
 ### Composer Install
-It's important to have the .env configured before running the following command, as one of the bundles used: Dotenv, requires the existence of the file for its installation.
+
+It's important to have the .env configured before running the following command, as one of the bundles used: Dotenv,
+requires the existence of the file for its installation.
+
+#### If you have installed composer in your system do it:
 
 ```sh
 composer install
 ```
+
+#### If not:
+
+```sh
+docker exec -it *name_php_container* /bin/bash
+composer install
+```
+
+### Dump script dump.sql
+
+Using database connection software like DBeaver or Navicat, or by directly dumping it into the MySQL container, we will
+inject the provided script located at the project path app/test/data.
 
 ### API Chatbot
 
@@ -124,7 +146,7 @@ If you have followed these steps, you should now be able to access localhost:808
 Creating a list allows you to organize your favorite games or keep track of titles you plan to play. You can create
 private lists for your own use or public lists to share with other users.
 
-![Create_A_List Demo](./app/images/create_list.gif)
+![Create_A_List Demo](images/create_list.gif)
 
 ### Add a game to the list
 
@@ -132,7 +154,7 @@ Once you've created a list, you can easily add games to it. Simply navigate to t
 the "Add Game" button, and then enter the title of the game you want to add. You can also add a brief description or any
 other relevant information about the game.
 
-![Add_A_Game_To_List Demo](./app/images/add_game.gif)
+![Add_A_Game_To_List Demo](images/add_game.gif)
 
 ### Rate games
 
@@ -140,7 +162,7 @@ Rating games allows you to share your opinion with other users and help them dis
 you can assign it a rating based on your experience. This helps to create a community-driven ranking system and provides
 valuable feedback to other users.
 
-![Create_A_List Demo](./app/images/rating.gif)
+![Create_A_List Demo](images/rating.gif)
 
 ### Chatbot
 
@@ -151,14 +173,14 @@ experience.
 
 Here is a demonstration video of the Chatbot in action:
 
-![Chatbot Demo](./app/images/chatbot.gif)
+![Chatbot Demo](images/chatbot.gif)
 
 ## Testing
 
 I have used PHPUnit to perform unit testing of my application, covering a large part of the
 Entities, Repositories, and Services of the project.
 
-![Testing](./app/images/coverage.png)
+![Testing](images/coverage.png)
 
 ## Contributing
 
@@ -176,11 +198,35 @@ You can find me at:
 
 ## Sources of Information
 
-Sources of information:
+Sources of information and code of other users:
 
-[Twilio - Get started with Docker and Symfony](https://www.twilio.com/en-us/blog/get-started-docker-symfony)
+### Documentation
 
-[PHP Unit- Official Documentation](https://docs.phpunit.de/en/9.6/fixtures.html)
+- [Twilio - Get started with Docker and Symfony](https://www.twilio.com/en-us/blog/get-started-docker-symfony)
+- [PHP Unit - Official Documentation](https://docs.phpunit.de/en/9.6/fixtures.html)
+- [PHP - Official Documentation](https://www.php.net/)
+- [Symfony - Official Documentation](https://symfony.com/)
+- [Docker - Official Documentation](https://www.docker.com/)
+- [W3Schools](https://www.w3schools.com/)
+
+### Codepen Code Used
+
+- [Codepen 1](https://codepen.io/chrisspb/pen/QWYLbaN)
+- [Codepen 2](https://codepen.io/syrizaldev/pen/xxxmdzw)
+- [Codepen 3](https://codepen.io/corbpie/pen/LYNwGdE)
+
+### Blogs and Articles
+
+- [Dev - Creating and Running an Angular Application in a Docker Container](https://dev.to/rodrigokamada/creating-and-running-an-angular-application-in-a-docker-container-40mk)
+- [Sysdig - Zoom Into Kinsing Kdevtmpfsi](https://sysdig.com/blog/zoom-into-kinsing-kdevtmpfsi/)
+
+### Games Database
+
+- [IGDB](https://www.igdb.com/)
+
+### Images
+
+- [Freepik](https://www.freepik.es/)
 
 
 

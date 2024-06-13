@@ -27,16 +27,13 @@ body {
   box-shadow: none;
   border: none;
 }
-
 .profile-button:hover {
   background: #875de5;
 }
-
 .profile-button:focus {
   background: #875de5;
   box-shadow: none;
 }
-
 .profile-button:active {
   background: #443ea2;
   box-shadow: none;
@@ -87,7 +84,6 @@ body {
 .edit-bt {
   color: #FFC107;
 }
-
 .edit-bt:hover {
   color: #a17a03;
 }
@@ -97,10 +93,13 @@ body {
   height: 150px;
   width: 150px;
 }
-
 .profile-pic:hover {
   cursor: pointer;
   opacity: 0.4;
+}
+
+.selected-avatar {
+  border: 2px solid #875de5;
 }
 
 /*# sourceMappingURL=profile.css.map */

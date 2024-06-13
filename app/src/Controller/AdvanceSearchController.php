@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdvanceSearchController extends AbstractController
 {
     public function __construct(
-        private EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $entityManager,
     ) {
     }
 
@@ -48,10 +48,6 @@ class AdvanceSearchController extends AbstractController
         #[MapQueryParameter] string $platform = '',
         #[MapQueryParameter] string $developer = '',
     ): Response {
-        $title = $request->query->get('title');
-        $genre = $request->query->get('genre');
-        $platform = $request->query->get('platform');
-        $developer = $request->query->get('developer');
         $filters = [];
         $queryBuilder = $this->entityManager->createQueryBuilder();
 

@@ -51,7 +51,6 @@ body {
   background-color: #875de5;
   border-color: #875de5;
 }
-
 .form-check-input.ga-switch:checked {
   background-color: #443EA2;
   border-color: #875de5;
@@ -73,7 +72,6 @@ body {
   background-color: white;
   border-radius: 8px;
 }
-
 .list-item:last-child {
   border-bottom: none;
 }

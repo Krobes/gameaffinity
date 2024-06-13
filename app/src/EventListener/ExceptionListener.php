@@ -23,10 +23,8 @@ class ExceptionListener implements EventSubscriberInterface
     public function onKernelException(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();
-        // Obtén el código de estado HTTP de la excepción, o usa 500 si no es válido.
         $statusCode = ($exception instanceof HttpExceptionInterface) ? $exception->getStatusCode() : 500;
 
-        // Asegúrate de que el código de estado sea uno válido
         if (!in_array($statusCode, [400, 404, 500])) {
             $statusCode = 500;
         }

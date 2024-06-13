@@ -15,6 +15,7 @@ body {
   background-color: #fff;
   min-height: 80vh;
   overflow: hidden;
+  border-radius: 6px;
 }
 
 .forms-container {
@@ -40,9 +41,9 @@ body {
 form {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
-  padding: 0rem 5rem;
+  padding: 0 5rem;
   transition: all 0.2s 0.7s;
   overflow: hidden;
   grid-column: 1/2;
@@ -267,7 +268,7 @@ form.sign-in-form {
   }
   .signin-signup {
     width: 100%;
-    top: 95%;
+    top: 82%; /* Ajusta este valor para mover el formulario hacia arriba o hacia abajo */
     transform: translate(-50%, -100%);
     transition: 1s 0.8s ease-in-out;
   }
@@ -306,7 +307,7 @@ form.sign-in-form {
     font-size: 1.2rem;
   }
   .panel p {
-    font-size: 0.7rem;
+    font-size: 1rem;
     padding: 0.5rem 0;
   }
   .btn.transparent {
@@ -358,7 +359,7 @@ form.sign-in-form {
   }
   .parent-container {
     padding: 1.5rem;
-    margin-top: 0px;
+    margin-top: 0;
   }
   .parent-container:before {
     bottom: 72%;

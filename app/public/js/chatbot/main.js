@@ -1,3 +1,10 @@
+/*
+ * Descripción: En este archivo llamamos a las funciones creadas en el helper para generar
+ * los elementos del HTML.
+ *
+ * Autor: Rafael Bonilla Lara
+ */
+
 import {createResponseElement, findFirstTextareaEmpty} from "./domHelper.js";
 import {OPTIONS_CHATGPT, URL_CHATGPT} from "./api.js";
 

@@ -28,7 +28,6 @@ body {
   border-radius: 0.2em;
 }
 
-
 .svg-icon {
   width: 24px;
   height: 24px;
@@ -66,40 +65,40 @@ button {
   font-size: 1.1rem;
   font-family: "system-ui";
   transition: background-color 0.3s, transform 0.3s;
-}
 
-button:hover {
-  background-color: #555;
-}
+  &:hover {
+    background-color: #666;
+  }
 
-button:active {
-  background-color: #666;
-}
+  &:active {
+    background-color: #a9a7a7;
+  }
 
-button:disabled {
-  background-color: #a9a7a7;
-  cursor: not-allowed;
+  &:disabled {
+    background-color: #a9a7a7;
+    cursor: not-allowed;
+  }
 }
 
 i {
   cursor: pointer;
-}
 
-i:hover {
-  color: #666;
-}
+  &:hover {
+    color: #666;
+  }
 
-i:active {
-  color: #444;
-}
+  &:active {
+    color: #444;
+  }
 
-.i-clear {
-  font-size: 2rem;
-}
+  &.i-clear {
+    font-size: 2rem;
+  }
 
-.i-delete,
-.i-add {
-  font-size: 2.2rem;
+  &.i-delete,
+  &.i-add {
+    font-size: 2.2rem;
+  }
 }
 
 .chatgpt-container {
@@ -110,6 +109,7 @@ i:active {
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 25px;
   gap: 10px;
 }
 
@@ -145,12 +145,66 @@ i:active {
   margin-top: 40px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.1);
+
+  &.h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
 }
 
-.powered-by-container h3 {
-  font-size: 1.2rem; /* Tamaño de fuente */
-  font-weight: bold;
-  color: #333; /* Color del texto */
+/* Media queries for responsiveness */
+@media (max-width: 1200px) {
+  .chatgpt-container,
+  .powered-by-container {
+    width: 80%;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
 }
 
+@media (max-width: 992px) {
+  .chatgpt-container,
+  .powered-by-container {
+    width: 90%;
+  }
 
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .chatgpt-container,
+  .powered-by-container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .section-title {
+    margin-bottom: 10%;
+  }
+
+  textarea {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  button {
+    font-size: 0.9rem;
+  }
+}

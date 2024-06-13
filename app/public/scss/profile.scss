@@ -25,21 +25,21 @@ body {
 .profile-button {
   background: #443ea2;
   box-shadow: none;
-  border: none
-}
+  border: none;
 
-.profile-button:hover {
-  background: #875de5
-}
+  &:hover {
+    background: #875de5
+  }
 
-.profile-button:focus {
-  background: #875de5;
-  box-shadow: none
-}
+  &:focus {
+    background: #875de5;
+    box-shadow: none;
+  }
 
-.profile-button:active {
-  background: #443ea2;
-  box-shadow: none
+  &:active {
+    background: #443ea2;
+    box-shadow: none
+  }
 }
 
 .back:hover {
@@ -86,19 +86,23 @@ body {
 
 .edit-bt {
   color: #FFC107;
-}
 
-.edit-bt:hover {
-  color: #a17a03;
+  &:hover {
+    color: #a17a03;
+  }
 }
 
 .profile-pic {
   position: relative;
   height: 150px;
   width: 150px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.4;
+  }
 }
 
-.profile-pic:hover {
-  cursor: pointer;
-  opacity: 0.4;
+.selected-avatar {
+  border: 2px solid #875de5;
 }

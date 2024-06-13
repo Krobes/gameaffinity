@@ -22,8 +22,8 @@ const ISO_COUNTRY = __DIR__ . '/../data/iso_country.json';
 $iso = [];
 
 if (ISO_COUNTRY) {
-    $contenidoJSON = file_get_contents(ISO_COUNTRY);
-    $iso = json_decode($contenidoJSON);
+    $jsonIsoCountry = file_get_contents(ISO_COUNTRY);
+    $iso = json_decode($jsonIsoCountry);
 }
 
 $body = "fields *; where developed != null & country != null & start_date != null; limit 500;";
@@ -59,7 +59,7 @@ foreach ($games as $k => $game) {
         $games2->setLogo(getLogo($game->logo, $headers));
     }
     $entityManager->persist($games2);
-    dump('Developer inyectado ' . $k . PHP_EOL);
+    dump('Developer injected ' . $k . PHP_EOL);
 }
 
 $entityManager->flush();
@@ -105,21 +105,21 @@ function getLogo($logo, $headers)
     }
 }
 
-function agregarCeros($numero)
+function agregarCeros($number)
 {
-    $numeroStr = (string)$numero;
+    $strNumber = (string)$number;
 
-    $longitud = strlen($numeroStr);
+    $longitud = strlen($strNumber);
 
     switch ($longitud) {
         case 1:
-            return '00' . $numeroStr;
+            return '00' . $strNumber;
             break;
         case 2:
-            return '0' . $numeroStr;
+            return '0' . $strNumber;
             break;
         default:
-            return $numeroStr;
+            return $strNumber;
             break;
     }
 }

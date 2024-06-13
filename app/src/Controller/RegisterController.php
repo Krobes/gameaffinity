@@ -28,10 +28,10 @@ class RegisterController extends AbstractController
     /**
      * @throws \Exception
      */
-    #[Route('/register', name: 'app_register', methods: ['POST'])]
+    #[Route('/register', name: 'app_register', methods: ['POST', 'GET'])]
     public function index(Request $request, Session $session): Response
     {
-        if ($this->getUser()) {
+        if ($this->getUser() || $request->getMethod() === 'GET') {
             return $this->redirectToRoute('app_index');
         }
 

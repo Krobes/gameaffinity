@@ -34,7 +34,7 @@
                     <tr class="text-center" onclick="location.href='{{ path('app_game_show', {id: entry[0].id}) }}';"
                         style="cursor: pointer;">
                         <th scope="row">{{ loop.index }}</th>
-                        <td><img src="{{ urlCompleta }}" alt="Cover" class="img-thumbnail game-cover"></td>
+                        <td><img src="{{ urlCompleta }}" alt="Cover" class="game-cover"></td>
                         <td>{{ entry[0].name }}</td>
                         <td>{{ entry[0].developer.name }}</td>
                         <td class="text-warning fw-bold">{{ entry['avgScore']|round(1) }}</td>

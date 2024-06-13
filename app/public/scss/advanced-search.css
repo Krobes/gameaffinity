@@ -14,16 +14,6 @@
   font-size: 2.5rem;
 }
 
-.title-text::before {
-  content: "";
-  display: inline-block;
-  width: 0.2em;
-  height: 0.75em;
-  background-color: #FFC107;
-  margin-right: 0.1em;
-  border-radius: 0.2em;
-}
-
 .svg-icon {
   width: 24px;
   height: 24px;
@@ -33,6 +23,15 @@
 
 .title-text {
   margin-right: 10px;
+}
+.title-text::before {
+  content: "";
+  display: inline-block;
+  width: 0.2em;
+  height: 0.75em;
+  background-color: #FFC107;
+  margin-right: 0.1em;
+  border-radius: 0.2em;
 }
 
 .search {

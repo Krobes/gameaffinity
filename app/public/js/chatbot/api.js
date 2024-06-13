@@ -1,4 +1,13 @@
-const API_KEY_CHATGPT; //Add here your API Key!
+/*
+ * Descripción: En este archivo se gestiona la consulta a la API de ChatGPT.
+ * Como podemos apreciar, añadiremos en el body un role system, que lo que hace
+ * es preparar al chatbotr para que solo responda a preguntas relacionadas con
+ * videojuegos.
+ *
+ * Autor: Rafael Bonilla Lara
+ */
+
+//const API_KEY_CHATGPT;
 
 export const URL_CHATGPT =
     "https://chatgpt-best-price.p.rapidapi.com/v1/chat/completions";

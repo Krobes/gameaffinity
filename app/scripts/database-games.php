@@ -88,9 +88,9 @@ foreach ($developers as $k => $developer) {
 
         }
         $entityManager->flush();
-        print_r('Desarrolladora ' . $k . ' completa.' . PHP_EOL);
+        print_r('Developer ' . $k . ' completed.' . PHP_EOL);
     } catch (Exception $e) {
-        print_r('Error procesando desarrolladora ' . $k . ': ' . $e->getMessage() . PHP_EOL);
+        print_r('Error processing developer ' . $k . ': ' . $e->getMessage() . PHP_EOL);
     }
 }
 

@@ -47,7 +47,7 @@ foreach ($genres as $k => $genre) {
     $genre2->setId($genre->id);
     $genre2->setName($genre->slug);
     $entityManager->persist($genre2);
-    dump('Género inyectado ' . $k . PHP_EOL);
+    dump('Genre injected ' . $k . PHP_EOL);
 }
 
 $entityManager->flush();

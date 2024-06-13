@@ -62,5 +62,4 @@ class ClassGuardsLogin
         }
         return true;
     }
-
 }

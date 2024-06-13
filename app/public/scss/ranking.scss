@@ -3,6 +3,8 @@ body {
   background-size: cover;
   background-attachment: fixed;
   color: #fff;
+  margin: 0;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 .container {
@@ -14,6 +16,7 @@ h1 {
   font-size: 2.5rem;
   margin-bottom: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  text-align: center;
 }
 
 .table-responsive {
@@ -22,13 +25,16 @@ h1 {
 }
 
 .table {
-  margin-bottom: 0;
+  margin-bottom: 75px;
   color: #fff;
+  table-layout: fixed;
+  width: 100%;
 }
 
 .table th,
 .table td {
   vertical-align: middle;
+  word-wrap: break-word;
 }
 
 .table thead th {
@@ -41,7 +47,7 @@ h1 {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: white !important;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .text-warning {
@@ -49,9 +55,10 @@ h1 {
 }
 
 .game-cover {
-  width: 50px;
+  width: 100px;
   height: auto;
   border-radius: 5px;
+  border: none;
 }
 
 .section-title {
@@ -66,16 +73,6 @@ h1 {
   font-size: 2rem;
 }
 
-.title-text::before {
-  content: '';
-  display: inline-block;
-  width: 0.2em;
-  height: 0.75em;
-  background-color: #FFC107;
-  margin-right: 0.1em;
-  border-radius: 0.2em;
-}
-
 .svg-icon {
   width: 24px;
   height: 24px;
@@ -85,4 +82,30 @@ h1 {
 
 .title-text {
   margin-right: 10px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 0.2em;
+    height: 0.75em;
+    background-color: #FFC107;
+    margin-right: 0.1em;
+    border-radius: 0.2em;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .table th,
+  .table td {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+
+  .game-cover {
+    width: 40px;
+  }
 }

@@ -1,3 +1,10 @@
+/*
+ * Descripción: En este archivo creamos los elementos del HTML según se vayan produciendo
+ * los diferentes eventos.
+ *
+ * Autor: Rafael Bonilla Lara
+ */
+
 const createIconsContainer = (
     div_chatgpt_container,
     responseTextArea,
@@ -39,6 +46,7 @@ const createIconsContainer = (
 export const createResponseElement = (div_chatgpt_container, prompt_tags) => {
     const responseTextArea = document.createElement("textarea");
     responseTextArea.placeholder = "Response";
+    responseTextArea.setAttribute("readonly", true);
     responseTextArea.setAttribute("rows", "5");
 
     const response_container_div = document.createElement("div");

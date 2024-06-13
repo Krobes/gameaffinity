@@ -1,3 +1,10 @@
+/*
+ * Descripción: En este archivo se gestiona la lógica del carrousel
+ *
+ * Autor: syrizaldev
+ * Link: https://codepen.io/syrizaldev/pen/xxxmdzw
+ */
+
 const swiper = new Swiper(".swiper-slider", {
     // Optional parameters
     centeredSlides: true,

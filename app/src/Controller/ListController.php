@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Game;
 use App\Entity\PersonalList;
-use App\Service\ClassGuardsAccessControl;
 use App\Service\ClassGuardsParams;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
@@ -23,7 +22,6 @@ class ListController extends AbstractController
     public function __construct(
         private EntityManagerInterface $entityManager,
         private ClassGuardsParams $guardsParams,
-        private ClassGuardsAccessControl $guardsAccessControl
     ) {
     }
 
@@ -154,8 +152,11 @@ class ListController extends AbstractController
         Request $request,
     ): Response {
         $queryBuilder = $this->entityManager->getRepository(PersonalList::class)->createQueryBuilder('pl')
+            ->join('pl.games', 'g')
             ->where('pl.isPublic = :isPublic')
-            ->setParameter('isPublic', true);
+            ->setParameter('isPublic', true)
+            ->groupBy('pl.id')
+            ->having('COUNT(g) > 0');
 
         $adapter = new QueryAdapter($queryBuilder);
         $pagerfanta = Pagerfanta::createForCurrentPageWithMaxPerPage(
@@ -163,9 +164,8 @@ class ListController extends AbstractController
             $request->query->get('page', 1),
             9
         );
-
-
-        return $this->render('/lists/publicList.html.twig', [
+        
+        return $this->render('/lists/index.html.twig', [
             'publicLists' => $pagerfanta
         ]);
     }

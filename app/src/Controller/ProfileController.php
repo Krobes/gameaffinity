@@ -88,7 +88,9 @@ class ProfileController extends AbstractController
             $user->setSurname($request->request->get('surname'));
             $user->setPhone($request->request->get('phone'));
             $user->setFavouriteGame($request->request->get('favouriteGame'));
-            $user->setAvatar($request->request->get('selectedAvatar'));
+            if ($request->request->get('selectedAvatar') != null) {
+                $user->setAvatar($request->request->get('selectedAvatar'));
+            }
             $this->entityManager->persist($user);
             $this->entityManager->flush();
             $session->getFlashBag()->add('success', 'The profile was edited successfully.');

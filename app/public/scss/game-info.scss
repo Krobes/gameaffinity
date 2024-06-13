@@ -51,13 +51,11 @@ body {
 .form-check-input.ga-switch {
   background-color: #875de5;
   border-color: #875de5;
+  &:checked{
+    background-color: #443EA2;
+    border-color: #875de5;
+  }
 }
-
-.form-check-input.ga-switch:checked {
-  background-color: #443EA2;
-  border-color: #875de5;
-}
-
 
 .list-container {
   border: 1px solid #ddd;
@@ -74,12 +72,11 @@ body {
   border-bottom: 1px solid #ddd;
   background-color: white;
   border-radius: 8px;
-}
 
-.list-item:last-child {
-  border-bottom: none;
+  &:last-child {
+    border-bottom: none;
+  }
 }
-
 .game-score, .game-votes {
   margin-top: 20px;
 }
@@ -111,7 +108,6 @@ body {
   margin: 0 auto;
   color: white;
 }
-
 
 @media screen and (min-width: 1024px) {
   .game-cover {

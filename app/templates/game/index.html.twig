@@ -13,7 +13,7 @@
     {% for message in app.flashes('error') %}
         <div id="flash-error-message" class="alert alert-danger mb-4">{{ message }}</div>
     {% endfor %}
-    <div class="container game-info-container mt-5 p-4 rounded shadow-sm">
+    <div class="container game-info-container mt-5 mb-5 p-4 rounded shadow-sm">
         <div class="row">
             <div class="col-lg-6 col-md-12">
                 <h1 class="game-title">{{ game.name }} ({{ game.dateRelease|date('Y') }}) </h1>
@@ -47,7 +47,6 @@
                                 data-bs-target="#addToListModal{{ game.id }}">Add game to list
                         </button>
 
-                        <!-- Puntuación del juego -->
                         <div class="game-rating d-flex align-items-center">
                             <form action="{{ path('app_rate_game', {'id': game.id}) }}" method="post"
                                   class="d-flex align-items-center">

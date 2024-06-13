@@ -1,3 +1,11 @@
+/*
+ * Descripción: Archivo en el que gestiono la creación de modales de
+ * manera dinámica dependiendo de las listas que que se vayan creando.
+ * Además, también se maneja la selección de avatares.
+ *
+ * Autor: Rafael Bonilla Lara
+ */
+
 document.addEventListener("DOMContentLoaded", function () {
     let modalAddPublicList = new bootstrap.Modal(document.getElementById("modalAddPublicList"));
     let modalAddPrivateList = new bootstrap.Modal(document.getElementById("modalAddPrivateList"));
@@ -15,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let divLists = document.querySelectorAll('.divList');
 
     divLists.forEach(function (divList) {
-        divList.addEventListener('click', function (event) {
+        divList.addEventListener('click', function () {
 
             let modalId = this.getAttribute('data-target');
             let modal = document.querySelector(modalId);
@@ -33,11 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const avatarModal = new bootstrap.Modal(document.getElementById("avatarModal"));
         avatarModal.show();
     });
-
-    var loadFile = function (event) {
-        var image = document.getElementById("output");
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
 });
 
 function selectAvatar(avatarPath) {
@@ -56,4 +59,13 @@ function selectAvatar(avatarPath) {
         selectedAvatarInput.value = avatarPath;
     }
 
+    const avatars = document.querySelectorAll('.selectable-avatar');
+    avatars.forEach(avatar => {
+        avatar.classList.remove('selected-avatar');
+    });
+
+    const selectedAvatar = Array.from(avatars).find(avatar => avatar.src.includes(avatarPath.split('/').pop()));
+    if (selectedAvatar) {
+        selectedAvatar.classList.add('selected-avatar');
+    }
 }

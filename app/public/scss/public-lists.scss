@@ -14,14 +14,18 @@ body {
   font-size: 2rem;
 }
 
-.title-text::before {
-  content: '';
-  display: inline-block;
-  width: 0.2em;
-  height: 0.75em;
-  background-color: #FFC107;
-  margin-right: 0.1em;
-  border-radius: 0.2em;
+.title-text {
+  margin-right: 10px;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 0.2em;
+    height: 0.75em;
+    background-color: #FFC107;
+    margin-right: 0.1em;
+    border-radius: 0.2em;
+  }
 }
 
 .svg-icon {
@@ -31,48 +35,55 @@ body {
   margin-right: 10px;
 }
 
-.title-text {
-  margin-right: 10px;
-}
 
 .card {
-  border: 1px solid #ddd; /* Color del borde */
+  border: 1px solid #ddd;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .card-img-top {
-  max-height: 375px; /* Altura máxima para las imágenes */
-  object-fit: cover; /* Ajustar imagen */
+  max-height: 375px;
+  object-fit: cover;
 }
 
 .card-body {
-  background-color: #fff; /* Color de fondo del cuerpo de la tarjeta */
+  background-color: #fff;
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
 }
 
 .card-title {
-  color: #343a40; /* Color del texto del título */
+  color: #343a40;
   flex: 0 0 auto;
 }
 
 .card-subtitle {
-  color: #6c757d; /* Color del subtítulo */
+  color: #6c757d;
   flex: 0 0 auto;
 }
 
 .avatar {
-  width: 30px; /* Ancho del avatar */
-  height: 30px; /* Alto del avatar */
-  border-radius: 50%; /* Hacer el avatar redondo */
-  margin-left: 10px; /* Espacio a la izquierda del avatar */
-  object-fit: cover; /* Asegurarse de que la imagen se ajuste bien dentro del círculo */
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left: 10px;
+  object-fit: cover;
 }
 
 .pager {
   display: flex;
   justify-content: center;
+}
+
+.no-results-text {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.no-results-icon {
+  max-width: 200px;
 }

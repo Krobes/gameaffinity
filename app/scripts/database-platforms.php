@@ -52,7 +52,7 @@ foreach ($platforms as $k => $platform) {
         $platform2->setLogo('');
     }
     $entityManager->persist($platform2);
-    dump('Platform inyectada ' . $k . PHP_EOL);
+    dump('Platform injected ' . $k . PHP_EOL);
 }
 
 $entityManager->flush();

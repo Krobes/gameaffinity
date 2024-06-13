@@ -35,7 +35,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstMaxList($numList, $isPublic): bool
     {
         if (count($numList) == 5) {
@@ -46,7 +45,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstExistingList($list): bool
     {
         if (!$list) {
@@ -55,7 +53,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstMaxGamesInList($listGames): bool
     {
         if (count($listGames) == 9) {
@@ -65,7 +62,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstLongParam($param): bool
     {
         if (strlen($param) > self::MAX_LENGTH) {
@@ -75,7 +71,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstExistingEmail($email): bool
     {
         if ($email) {
@@ -85,7 +80,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstExistingNick($nick): bool
     {
         if ($nick) {
@@ -95,7 +89,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstNotExistingGame($game): bool
     {
         if (!$game) {
@@ -104,7 +97,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstInvalidPhone($phone): bool
     {
         $pattern = '/^(?:\+[0-9]{1,3})?[0-9]{9}$/';
@@ -116,7 +108,6 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstInvalidMail($mail): bool
     {
         $pattern = '/^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/';
@@ -128,19 +119,14 @@ class ClassGuardsParams
         return true;
     }
 
-    //Falta test
     public function guardAgainstInvalidAvatar($avatarPath): bool
     {
-
-        if (!in_array($avatarPath, self::AVATAR_PATH)) {
+        if (!in_array($avatarPath, self::AVATAR_PATH) && $avatarPath != null) {
             $this->errors[] = 'The avatar isn\'t valid.';
             return false;
         }
         return true;
     }
-
-    //Falta test
-
 
     public function guardAgainstInvalidRate($rate): bool
     {
@@ -150,8 +136,6 @@ class ClassGuardsParams
         return true;
     }
 
-
-    //Falta test
     public function guardAgainstInvalidId($entity): bool
     {
         if (empty($entity)) {

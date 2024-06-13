@@ -1,3 +1,10 @@
+/*
+ * Descripción: Función que maneja la lógica del menú
+ *
+ * Autor: corbpie
+ * Link: https://codepen.io/corbpie/pen/LYNwGdE
+ */
+
 const mobileScreen = window.matchMedia("(max-width: 990px )");
 $(document).ready(function () {
     $(".dashboard-nav-dropdown-toggle").click(function () {

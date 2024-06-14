@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block body %}
-    <main>
+    <main class="mb-5">
         <div class="container mt-5">
             <h1 class="section-title">
                 <span class="title-text">Advanced Search</span>
@@ -64,8 +64,5 @@
             </div>
         </div>
     </main>
-    {% block javascripts %}
-        {{ parent() }}
-        <script src="/js/advanced-search.js"></script>
-    {% endblock %}
+    <script src="/js/advanced-search.js"></script>
 {% endblock %}

@@ -22,6 +22,7 @@ opinions.
 
 - [Versions](#versions)
 - [Prerequisites](#prerequisites)
+- [Tips](#tips)
 - [Installation](#installation)
 - [Deployment](#deployment)
 - [Usage](#usage)
@@ -69,6 +70,13 @@ If any of these ports are not available, follow these steps:
          ports:
              - '8080:80'
 
+## Tips
+
+- If you are installing Docker on your machine for the first time, I recommend adding your user to the docker group so that you don't have to run all commands with sudo.
+
+- When connecting to the database, if you encounter issues connecting to localhost on port 4306, run the command docker inspect 'mysql_container_name' to find out its IP address and connect through port 3306.
+
+
 ## Installation
 
 Clone the repository to your local machine:
@@ -76,13 +84,15 @@ Clone the repository to your local machine:
 ```sh
 git clone https://github.com/Krobes/gameaffinity.git
 cd gameaffinity
-docker-compose up -d
+docker compose up -d
 
 ````
 
 ## Deployment
 
 ### Env file
+
+Place the .env file in the root of the app folder.
 
 ```env
 APP_ENV=prod
@@ -137,7 +147,7 @@ URL: https://rapidapi.com/truongvuhung102/api/chatgpt-best-price
 const API_KEY_CHATGPT = "";
 ```
 
-If you have followed these steps, you should now be able to access localhost:8081 and see Gameaffinity deployed!
+If you have followed these steps, you should now be able to access localhost:81 and see Gameaffinity deployed!
 
 ## Usage
 
@@ -227,6 +237,7 @@ Sources of information and code of other users:
 ### Images
 
 - [Freepik](https://www.freepik.es/)
+- [Leonardo AI](https://leonardo.ai/)
 
 
 

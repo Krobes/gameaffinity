@@ -13,7 +13,7 @@
     {% for message in app.flashes('error') %}
         <div id="flash-error-message" class="alert alert-danger mb-4">{{ message }}</div>
     {% endfor %}
-    <main>
+    <main class="mb-5">
         <div class="container mt-5">
             <h1 class="section-title">
                 <span class="title-text">Advanced Search</span>
@@ -173,6 +173,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </main>
     <script src="/js/filtered-games.js"></script>
     <script src="/js/alerts.js"></script>

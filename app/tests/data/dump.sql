@@ -11,7 +11,7 @@
  Target Server Version : 80036 (8.0.36)
  File Encoding         : 65001
 
- Date: 02/06/2024 21:14:27
+ Date: 14/06/2024 12:24:34
 */
 
 SET NAMES utf8mb4;
@@ -11447,22 +11447,11 @@ CREATE TABLE `personal_list`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `IDX_75C2FF25A76ED395`(`user_id` ASC) USING BTREE,
   CONSTRAINT `FK_75C2FF25A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 38 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of personal_list
 -- ----------------------------
-INSERT INTO `personal_list` VALUES (1, 5, 'Mejores juegos 2025', 1);
-INSERT INTO `personal_list` VALUES (5, 5, 'Mejores juegos 2023', 1);
-INSERT INTO `personal_list` VALUES (21, 5, 'Juegos terror más esperados', 0);
-INSERT INTO `personal_list` VALUES (24, 5, 'Si te gustan los plataformas', 1);
-INSERT INTO `personal_list` VALUES (25, 291, 'Mejores juegos Kakescos', 1);
-INSERT INTO `personal_list` VALUES (26, 5, 'Juegos Kaki', 1);
-INSERT INTO `personal_list` VALUES (27, 291, 'a', 1);
-INSERT INTO `personal_list` VALUES (28, 291, 'b', 1);
-INSERT INTO `personal_list` VALUES (29, 291, 'c', 1);
-INSERT INTO `personal_list` VALUES (30, 291, 'd', 1);
-INSERT INTO `personal_list` VALUES (31, 5, 'Juegos pasados 2024', 0);
 
 -- ----------------------------
 -- Table structure for personal_list_game
@@ -11481,33 +11470,6 @@ CREATE TABLE `personal_list_game`  (
 -- ----------------------------
 -- Records of personal_list_game
 -- ----------------------------
-INSERT INTO `personal_list_game` VALUES (1, 1);
-INSERT INTO `personal_list_game` VALUES (1, 2);
-INSERT INTO `personal_list_game` VALUES (1, 22);
-INSERT INTO `personal_list_game` VALUES (1, 70);
-INSERT INTO `personal_list_game` VALUES (1, 95);
-INSERT INTO `personal_list_game` VALUES (1, 71533);
-INSERT INTO `personal_list_game` VALUES (1, 71656);
-INSERT INTO `personal_list_game` VALUES (1, 287849);
-INSERT INTO `personal_list_game` VALUES (1, 292879);
-INSERT INTO `personal_list_game` VALUES (5, 147184);
-INSERT INTO `personal_list_game` VALUES (5, 222341);
-INSERT INTO `personal_list_game` VALUES (5, 224409);
-INSERT INTO `personal_list_game` VALUES (5, 253749);
-INSERT INTO `personal_list_game` VALUES (5, 291104);
-INSERT INTO `personal_list_game` VALUES (21, 107324);
-INSERT INTO `personal_list_game` VALUES (21, 204363);
-INSERT INTO `personal_list_game` VALUES (21, 222341);
-INSERT INTO `personal_list_game` VALUES (24, 200903);
-INSERT INTO `personal_list_game` VALUES (24, 291104);
-INSERT INTO `personal_list_game` VALUES (25, 221278);
-INSERT INTO `personal_list_game` VALUES (26, 254354);
-INSERT INTO `personal_list_game` VALUES (26, 291104);
-INSERT INTO `personal_list_game` VALUES (27, 246027);
-INSERT INTO `personal_list_game` VALUES (28, 246027);
-INSERT INTO `personal_list_game` VALUES (29, 246027);
-INSERT INTO `personal_list_game` VALUES (30, 246027);
-INSERT INTO `personal_list_game` VALUES (31, 204363);
 
 -- ----------------------------
 -- Table structure for platform
@@ -11749,7 +11711,7 @@ CREATE TABLE `reset_password_request`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `IDX_7CE748AA76ED395`(`user_id` ASC) USING BTREE,
   CONSTRAINT `FK_7CE748AA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of reset_password_request
@@ -11769,20 +11731,11 @@ CREATE TABLE `score`  (
   INDEX `IDX_32993751E48FD905`(`game_id` ASC) USING BTREE,
   CONSTRAINT `FK_32993751A76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `FK_32993751E48FD905` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 89 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of score
 -- ----------------------------
-INSERT INTO `score` VALUES (5, 8, 5, 307);
-INSERT INTO `score` VALUES (69, 7, 5, 291104);
-INSERT INTO `score` VALUES (70, 6, 291, 291104);
-INSERT INTO `score` VALUES (71, 8, 5, 287849);
-INSERT INTO `score` VALUES (74, 5, 5, 90638);
-INSERT INTO `score` VALUES (75, 9, 5, 222341);
-INSERT INTO `score` VALUES (76, 8, 291, 287849);
-INSERT INTO `score` VALUES (77, 10, 5, 126273);
-INSERT INTO `score` VALUES (78, 5, 5, 222741);
 
 -- ----------------------------
 -- Table structure for user
@@ -11801,13 +11754,11 @@ CREATE TABLE `user`  (
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `UNIQ_IDENTIFIER_EMAIL`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 304 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 305 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (5, 'rafa_lara@hotmail.es', '[]', '$2y$13$2VSnrT2uaxw4s7ox.wgXwePIqRaDfz0eEGqEX0TPLeoeSOgSfRpMm', 'Krobes', 'Rafael', 'Bonilla Lara', '+34677250746', 'Blasphemous', '/avatars/avatar5.png');
-INSERT INTO `user` VALUES (291, 'kakas@gmail.com', '[]', '$2y$13$zt4ZhldSGgJqIDvmlWzq0uCX6WeUHqGbSwSOs2SeuqBdg3jlQgsUO', 'Kakas', '', '', '', '', '/avatars/avatar3.png');
-INSERT INTO `user` VALUES (303, 'rbonillalara@gmail.com', '[]', '$2y$13$FiSSXAJyo.bslWfQOXRYEu1g4obFKhf9oWAVQDmBY50tDggG/N2Te', 'Prueba', NULL, NULL, NULL, NULL, '/avatars/avatar5.png');
+INSERT INTO `user` VALUES (304, 'rafa_lara@hotmail.es', '[]', '$2y$13$VT7o5PLOqHp3RwW8izEgzuHRAAHAtm38weFryjjqp0fOlw5mDnk7y', 'Krobes', NULL, NULL, NULL, NULL, '/avatars/avatar5.png');
 
 SET FOREIGN_KEY_CHECKS = 1;

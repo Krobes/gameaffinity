@@ -106,3 +106,9 @@ body {
 .selected-avatar {
   border: 2px solid #875de5;
 }
+
+@media screen and (min-width: 1024px) {
+  .footer {
+    margin-top: 100px;
+  }
+}

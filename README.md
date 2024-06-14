@@ -72,10 +72,13 @@ If any of these ports are not available, follow these steps:
 
 ## Tips
 
-- If you are installing Docker on your machine for the first time, I recommend adding your user to the docker group so that you don't have to run all commands with sudo.
+- If you are installing Docker on your machine for the first time, I recommend adding your user to the docker group so
+  that you don't have to run all commands with sudo.
 
-- When connecting to the database, if you encounter issues connecting to localhost on port 4306, run the command docker inspect 'mysql_container_name' to find out its IP address and connect through port 3306.
+- When connecting to the database, if you encounter issues connecting to localhost on port 4306, run the command docker
+  inspect 'mysql_container_name' to find out its IP address and connect through port 3306.
 
+- If you get a 500 error, check project permissions or verify if you imported dump.sql correctly.
 
 ## Installation
 
@@ -136,6 +139,12 @@ composer install
 
 Using database connection software like DBeaver or Navicat, or by directly dumping it into the MySQL container, we will
 inject the provided script located at the project path app/test/data.
+
+- If you decide use docker command:
+
+```sh
+docker exec -i database mysql -uroot -psecret symfony_docker < /path/to/dump.sql
+```
 
 ### API Chatbot
 

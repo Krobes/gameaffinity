@@ -49,59 +49,61 @@
             {% endif %}
         </nav>
     </div>
-    <div class="dashboard-app">
+    <div class="dashboard-app d-flex flex-column">
         <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a></header>
         {% block body %}
         {% endblock %}
-    </div>
-</div>
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <h5>Useful links</h5>
-                <ul class="list-unstyled footer-links">
-                    <li><a href="#">Homepage</a></li>
-                    <li><a href="{{ path('app_advance_search') }}">Advanced Search</a></li>
-                    <li><a href="{{ path('app_public_lists') }}">Public Lists</a></li>
-                    <li><a href="{{ path('app_ranking') }}">Ranking</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h5>Contact</h5>
-                <ul class="list-unstyled footer-contact">
-                    <li><i class="fas fa-envelope"></i> <span>support@gameaffinity.com</span></li>
-                    <li><i class="fas fa-phone"></i> <span>+1 (123) 456-7890</span></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h5>Follow us!</h5>
-                <ul class="list-unstyled footer-social">
-                    <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                </ul>
-            </div>
-            <div class="col-md-3">
-                <h5>Terms and conditions</h5>
-                <ul class="list-unstyled footer-links">
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 mt-5 mb-1 text-center">
-                    <p>© 2024 Gameaffinity. All rights reserved.</p>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Useful links</h5>
+                        <ul class="list-unstyled footer-links">
+                            <li><a href="#">Homepage</a></li>
+                            <li><a href="{{ path('app_advance_search') }}">Advanced Search</a></li>
+                            <li><a href="{{ path('app_public_lists') }}">Public Lists</a></li>
+                            <li><a href="{{ path('app_ranking') }}">Ranking</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Contact</h5>
+                        <ul class="list-unstyled footer-contact">
+                            <li><i class="fas fa-envelope"></i> <span>support@gameaffinity.com</span></li>
+                            <li><i class="fas fa-phone"></i> <span>+1 (123) 456-7890</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Follow us!</h5>
+                        <ul class="list-unstyled footer-social">
+                            <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                            <li><a href="https://github.com/Krobes/gameaffinity/"><i class="fab fa-github"></i>
+                                    Github</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Terms and conditions</h5>
+                        <ul class="list-unstyled footer-links">
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 mt-5 mb-1 text-center">
+                            <p>© 2024 Gameaffinity. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
     </div>
-</footer>
+</div>
 
 {% block javascripts %}
     <script src="/js/popper.min.js"></script>

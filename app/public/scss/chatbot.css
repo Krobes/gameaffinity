@@ -190,5 +190,10 @@ i.i-delete, i.i-add {
     font-size: 0.9rem;
   }
 }
+@media screen and (min-width: 1024px) {
+  .footer {
+    margin-top: 100px;
+  }
+}
 
 /*# sourceMappingURL=chatbot.css.map */

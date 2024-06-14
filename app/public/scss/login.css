@@ -370,5 +370,10 @@ form.sign-in-form {
     left: 50%;
   }
 }
+@media screen and (min-width: 1024px) {
+  .footer {
+    margin-top: 200px;
+  }
+}
 
 /*# sourceMappingURL=login.css.map */

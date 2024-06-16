@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Descripción: En este servicio se gestionan las cláusulas de guarda del login.
+ *
+ * Autor: Rafael Bonilla Lara
+ */
+
 namespace App\Service;
 
 use App\Entity\User;

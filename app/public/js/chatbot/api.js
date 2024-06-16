@@ -7,7 +7,7 @@
  * Autor: Rafael Bonilla Lara
  */
 
-const API_KEY_CHATGPT = "08a027701fmsh81e6d4c9fe56b68p10afc8jsn1f83d9b96d7e";
+//const API_KEY_CHATGPT;
 
 export const URL_CHATGPT =
     "https://chatgpt-best-price.p.rapidapi.com/v1/chat/completions";

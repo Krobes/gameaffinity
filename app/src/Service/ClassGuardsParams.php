@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Descripción: En este servicio se gestionan validaciones generales sobre parámetros de la app.
+ *
+ * Autor: Rafael Bonilla Lara
+ */
+
 namespace App\Service;
 
 class ClassGuardsParams
